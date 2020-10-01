@@ -6,20 +6,25 @@ use Laravel\Nova\Card;
 
 class NovaDetachedFilters extends Card
 {
-    /**
-     * The width of the card (1/3, 1/2, or full).
-     *
-     * @var string
-     */
-    public $width = '1/3';
+    public $width = '1/3'; // (1/3, 1/2, or full)
+    public $filters = [];
 
-    /**
-     * Get the component name for the element.
-     *
-     * @return string
-     */
+    public function __construct($filters = [])
+    {
+        $this->filters = $filters;
+    }
+
     public function component()
     {
         return 'nova-detached-filters';
+    }
+
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'filters' => collect(is_callable($this->filters) ? $this->filters() : $this->filters)->each(function ($filter) {
+                return $filter->jsonSerialize();
+            }),
+        ]);
     }
 }
