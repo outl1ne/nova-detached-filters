@@ -8,6 +8,7 @@ class NovaDetachedFilters extends Card
 {
     public $width = '1/3'; // (1/3, 1/2, or full)
     public $filters = [];
+    public $withReset = false;
 
     public function __construct($filters = [])
     {
@@ -17,6 +18,11 @@ class NovaDetachedFilters extends Card
     public function component()
     {
         return 'nova-detached-filters';
+    }
+
+    public function withReset($value = true): bool
+    {
+        return $this->withReset = $value;
     }
 
     public function jsonSerialize()
