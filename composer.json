@@ -1,29 +1,44 @@
 {
-    "name": "optimistdigital/nova-detached-filters",
-    "description": "A Laravel Nova card.",
-    "keywords": [
-        "laravel",
-        "nova"
-    ],
-    "license": "MIT",
-    "require": {
-        "php": ">=7.1.0"
+  "name": "optimistdigital/nova-detached-filters",
+  "description": "This Laravel Nova package allows you to place filters outside of the dropdown",
+  "keywords": [
+    "laravel",
+    "nova",
+    "card",
+    "filter",
+    "persist"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kaspar Rosin",
+      "email": "kaspar.rosin@gmail.com",
+      "role": "Developer"
     },
-    "autoload": {
-        "psr-4": {
-            "OptimistDigital\\NovaDetachedFilters\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "OptimistDigital\\NovaDetachedFilters\\CardServiceProvider"
-            ]
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    {
+      "name": "Optimist Digital",
+      "email": "info@optimistdigital.com",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "OptimistDigital\\NovaDetachedFilters\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "OptimistDigital\\NovaDetachedFilters\\CardServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

@@ -185,7 +185,6 @@ export default {
     h3 {
       background-color: transparent;
       text-transform: capitalize;
-      color: var(--black);
       padding: 0.25rem 4rem 0 0.5rem;
       font-size: 16px;
       font-weight: 300;
@@ -230,7 +229,7 @@ export default {
     transition: all 0.3s $transition;
 
     &.active {
-      fill: #ff0000;
+      fill: var(--success);
       opacity: 0.8;
     }
 
