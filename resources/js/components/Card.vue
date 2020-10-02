@@ -45,15 +45,16 @@
       <div class="detached-filters-button" v-if="this.card.persistFilters">
         <svg
           class="lock-filters-btn"
-          :class="{ active: persistFilters }"
-          @click="togglePersistFilters"
+          :class="{ active: shouldPersistFilters }"
+          @click="toggleShouldPersistFilters"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="16"
           height="16"
         >
           <path
-            d="m18.75 9h-.75v-3c0-3.309-2.691-6-6-6s-6 2.691-6 6v3h-.75c-1.24 0-2.25 1.009-2.25 2.25v10.5c0 1.241 1.01 2.25 2.25 2.25h13.5c1.24 0 2.25-1.009 2.25-2.25v-10.5c0-1.241-1.01-2.25-2.25-2.25zm-10.75-3c0-2.206 1.794-4 4-4s4 1.794 4 4v3h-8zm5 10.722v2.278c0 .552-.447 1-1 1s-1-.448-1-1v-2.278c-.595-.347-1-.985-1-1.722 0-1.103.897-2 2-2s2 .897 2 2c0 .737-.405 1.375-1 1.722z"/>
+            d="m18.75 9h-.75v-3c0-3.309-2.691-6-6-6s-6 2.691-6 6v3h-.75c-1.24 0-2.25 1.009-2.25 2.25v10.5c0 1.241 1.01 2.25 2.25 2.25h13.5c1.24 0 2.25-1.009 2.25-2.25v-10.5c0-1.241-1.01-2.25-2.25-2.25zm-10.75-3c0-2.206 1.794-4 4-4s4 1.794 4 4v3h-8zm5 10.722v2.278c0 .552-.447 1-1 1s-1-.448-1-1v-2.278c-.595-.347-1-.985-1-1.722 0-1.103.897-2 2-2s2 .897 2 2c0 .737-.405 1.375-1 1.722z"
+          />
         </svg>
       </div>
     </div>
@@ -61,193 +62,191 @@
 </template>
 
 <script>
-  import {Filterable, InteractsWithQueryString} from 'laravel-nova'
+import { Filterable, InteractsWithQueryString } from 'laravel-nova';
 
-  export default {
-    mixins: [Filterable, InteractsWithQueryString],
-    props: ['card', 'resourceName', 'viaResource', 'viaRelationship'],
-    data: () => ({
-      persistedFilters: JSON.parse(localStorage.getItem('PERSISTED_DETACHED_FILTERS')),
-      persistFilters: JSON.parse(localStorage.getItem('PERSIST_DETACHED_FILTERS')),
-    }),
+export default {
+  mixins: [Filterable, InteractsWithQueryString],
+  props: ['card', 'resourceName', 'viaResource', 'viaRelationship'],
+  data: () => ({
+    persistedFilters: JSON.parse(localStorage.getItem('PERSISTED_DETACHED_FILTERS')),
+    shouldPersistFilters: JSON.parse(localStorage.getItem('PERSIST_DETACHED_FILTERS')),
+  }),
 
-    mounted() {
-      if (this.persistFilters) {
-        if (this.persistedFilters) this.loadPersistedFilters();
-        else this.initializePersistedFilters();
-      }
+  mounted() {
+    if (this.shouldPersistFilters) {
+      if (this.persistedFilters && this.persistedFilters[this.resourceName]) this.loadPersistedFilters();
+      else this.initializePersistedFilters();
+    }
+  },
+
+  methods: {
+    getFilterWidth(filter) {
+      if (filter.width) return filter.width;
+      return 'w-auto';
     },
 
-    methods: {
-      getFilterWidth(filter) {
-        if (filter.width) return filter.width;
-        return 'w-auto';
-      },
+    resetFilter(filter) {
+      this.$store.commit(`${this.resourceName}/updateFilterState`, {
+        filterClass: filter.class,
+        value: null,
+      });
 
-      resetFilter(filter) {
+      this.handleFilterChanged(filter);
+    },
+
+    shouldShowResetFilterBtn(filter) {
+      return filter.withReset || this.card.withReset;
+    },
+
+    toggleShouldPersistFilters() {
+      this.shouldPersistFilters = !this.shouldPersistFilters;
+      localStorage.setItem('PERSIST_DETACHED_FILTERS', JSON.stringify(this.shouldPersistFilters));
+
+      this.initializePersistedFilters();
+    },
+
+    loadPersistedFilters() {
+      this.persistedFilters[this.resourceName].forEach(filterItem => {
         this.$store.commit(`${this.resourceName}/updateFilterState`, {
-          filterClass: filter.class,
-          value: null,
+          filterClass: filterItem.filterClass,
+          value: filterItem.value,
         });
+      });
 
-        this.handleFilterChanged(filter);
-      },
+      this.filterChanged();
+    },
 
-      shouldShowResetFilterBtn(filter) {
-        return filter.withReset || this.card.withReset;
-      },
+    handleFilterChanged(filter) {
+      if (this.shouldPersistFilters) {
+        // Get updated filter from $store;
+        const updatedFilter = this.getFilter(filter.class);
+        if (!updatedFilter) return;
 
-      togglePersistFilters() {
-        this.persistFilters = !this.persistFilters;
-        localStorage.setItem('PERSIST_DETACHED_FILTERS', JSON.stringify(this.persistFilters));
-
-        this.initializePersistedFilters();
-      },
-
-      loadPersistedFilters() {
-        this.persistedFilters.forEach((filterItem) => {
-          this.$store.commit(`${this.resourceName}/updateFilterState`, {
-            filterClass: filterItem.filterClass,
-            value: filterItem.value,
+        // Get filter index in localStorage;
+        const filterIndex = this.persistedFilters[this.resourceName].findIndex(filter => filter.key === filter.class);
+        if (!filterIndex || filterIndex <= 0 || !this.persistedFilters[this.resourceName][filterIndex]) {
+          // If key-value pair doesn't exist in localStorage, save new
+          this.persistedFilters[this.resourceName].push({
+            filterClass: filter.class,
+            value: updatedFilter.currentValue,
           });
-        });
-
-        this.filterChanged();
-      },
-
-      handleFilterChanged(filter) {
-        if (this.persistFilters) {
-          // Get updated filter from $store;
-          const updatedFilter = this.getFilter(filter.class);
-          if (!updatedFilter) return;
-
-          // Get filter index in localStorage;
-          const filterIndex = this.persistedFilters.findIndex(filter => filter.key === filter.class);
-          if (!filterIndex || !this.persistFilters[filterIndex]) {
-            // If key-value pair doesn't exist in localStorage, save new
-            this.persistedFilters.push({
-              filterClass: filter.class,
-              value: updatedFilter.currentValue
-            });
-          } else {
-            // If exists, update value
-            this.persistedFilters[filterIndex].value = updatedFilter.currentValue;
-          }
-
-
-          localStorage.setItem('PERSISTED_DETACHED_FILTERS', JSON.stringify(this.persistedFilters));
+        } else {
+          // If exists, update value
+          this.persistedFilters[this.resourceName][filterIndex].value = updatedFilter.currentValue;
         }
 
-        this.filterChanged();
-      },
-
-      getFilter(filterKey) {
-        return this.$store.getters[`${this.resourceName}/getFilter`](filterKey);
-      },
-
-      initializePersistedFilters() {
-        this.persistedFilters = [];
-        localStorage.setItem('PERSISTED_DETACHED_FILTERS', JSON.stringify(this.persistedFilters))
-      },
-
-      clearAllFilters() {
-        this.initializePersistedFilters();
-        this.clearSelectedFilters();
+        localStorage.setItem('PERSISTED_DETACHED_FILTERS', JSON.stringify(this.persistedFilters));
       }
+
+      this.filterChanged();
     },
 
-    computed: {
-      pageParameter() {
-        return this.viaRelationship
-          ? this.viaRelationship + '_page'
-          : this.resourceName + '_page'
-      },
-    }
-  };
+    getFilter(filterKey) {
+      return this.$store.getters[`${this.resourceName}/getFilter`](filterKey);
+    },
+
+    initializePersistedFilters() {
+      if (!this.persistedFilters) this.persistedFilters = {};
+      this.persistedFilters[this.resourceName] = [];
+
+      localStorage.setItem('PERSISTED_DETACHED_FILTERS', JSON.stringify(this.persistedFilters));
+    },
+
+    clearAllFilters() {
+      this.initializePersistedFilters();
+      this.clearSelectedFilters();
+    },
+  },
+
+  computed: {
+    pageParameter() {
+      return this.viaRelationship ? this.viaRelationship + '_page' : this.resourceName + '_page';
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-  .nova-detached-filters-card {
-    $transition: cubic-bezier(0.6, 0.4, 0.1, 0.9);
-    height: auto;
-    position: relative;
+.nova-detached-filters-card {
+  $transition: cubic-bezier(0.6, 0.4, 0.1, 0.9);
+  height: auto;
+  position: relative;
 
-    .detached-filters {
-      display: flex;
-      flex-wrap: wrap;
+  .detached-filters {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .detached-filter {
+    > div:first-of-type {
+      width: 100%;
     }
 
-    .detached-filter {
-      > div:first-of-type {
-        width: 100%;
-      }
+    h3 {
+      background-color: transparent;
+      text-transform: capitalize;
+      color: var(--black);
+      padding: 0.25rem 4rem 0 0.5rem;
+      font-size: 16px;
+      font-weight: 300;
+      font-family: Nunito, system-ui, BlinkMacSystemFont, -apple-system, sans-serif;
 
-      h3 {
-        background-color: transparent;
-        text-transform: capitalize;
-        color: var(--black);
-        padding: 0.25rem 4rem 0 0.5rem;
-        font-size: 16px;
-        font-weight: 300;
-        font-family: Nunito, system-ui, BlinkMacSystemFont, -apple-system, sans-serif;
-
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .reset-filter-btn {
-        position: absolute;
-        right: 0.75rem;
-        top: 0.25rem;
-        cursor: pointer;
-      }
-    }
-
-    .detached-filters-buttons {
-      position: absolute;
-      display: flex;
-      top: -2rem;
-      right: 0;
-
-      .detached-filters-button {
-        padding: 0.5rem 1rem;
-        background-color: var(--white);
-        border-color: var(grey);
-
-        &:last-of-type {
-          border-top-right-radius: 0.25rem;
-        }
-
-        &:first-of-type {
-          border-top-left-radius: 0.25rem;
-        }
-      }
-    }
-
-    .lock-filters-btn {
-      opacity: 0.6;
-      transition: all 0.3s $transition;
-
-
-      &.active {
-        fill: #ff0000;
-        opacity: 0.8;
-      }
-
-      &:hover {
-        opacity: 1;
-      }
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .reset-filter-btn {
-      opacity: 0.6;
-      transition: all 0.3s $transition;
+      position: absolute;
+      right: 0.75rem;
+      top: 0.25rem;
+      cursor: pointer;
+    }
+  }
 
-      &:hover {
-        opacity: 1;
-        transform: rotate(-120deg);
+  .detached-filters-buttons {
+    position: absolute;
+    display: flex;
+    top: -2rem;
+    right: 0;
+
+    .detached-filters-button {
+      padding: 0.5rem 1rem;
+      background-color: var(--white);
+      border-color: var(grey);
+
+      &:last-of-type {
+        border-top-right-radius: 0.25rem;
+      }
+
+      &:first-of-type {
+        border-top-left-radius: 0.25rem;
       }
     }
   }
+
+  .lock-filters-btn {
+    opacity: 0.6;
+    transition: all 0.3s $transition;
+
+    &.active {
+      fill: #ff0000;
+      opacity: 0.8;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .reset-filter-btn {
+    opacity: 0.6;
+    transition: all 0.3s $transition;
+
+    &:hover {
+      opacity: 1;
+      transform: rotate(-120deg);
+    }
+  }
+}
 </style>
