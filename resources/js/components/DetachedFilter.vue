@@ -6,14 +6,14 @@
       :filter-key="filter.class"
       :is="filter.component"
       :lens="''"
-      @input="this.$emit('handleFilterChanged', filter)"
-      @change="this.$emit('handleFilterChanged', filter)"
+      @input="$emit('handleFilterChanged', filter)"
+      @change="$emit('handleFilterChanged', filter)"
     />
 
     <svg
       v-if="filter.withReset"
       class="reset-filter-btn"
-      @click="this.$emit('resetFilter', filter)"
+      @click="$emit('resetFilter', filter)"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 460.801 460.801"
       height="16"

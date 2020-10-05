@@ -3,7 +3,7 @@
     <div class="px-3 py-4 detached-filters">
       <div class="relative flex flex-wrap" :class="getWidth(item)" v-for="item in card.filters">
         <!-- Single Filter -->
-        <detached-filter
+        <nova-detached-filter
           v-if="isFilterComponent(item)"
           :width="'w-full'"
           :key="item.key"
@@ -14,7 +14,7 @@
         />
 
         <!-- Filter Column -->
-        <detached-filter
+        <nova-detached-filter
           v-else
           v-for="filter in item.filters"
           :width="getWidth(filter)"
@@ -62,10 +62,8 @@
 
 <script>
 import { Filterable, InteractsWithQueryString } from 'laravel-nova';
-import DetachedFilter from './DetachedFilter';
 
 export default {
-  components: { DetachedFilter },
   mixins: [Filterable, InteractsWithQueryString],
   props: ['card', 'resourceName', 'viaResource', 'viaRelationship'],
   data: () => ({
