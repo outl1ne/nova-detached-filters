@@ -1,6 +1,6 @@
 {
   "name": "optimistdigital/nova-detached-filters",
-  "description": "This Laravel Nova package allows you to place filters outside of the dropdown",
+  "description": "This Laravel Nova package allows you to detach filters from the filter dropdown",
   "keywords": [
     "laravel",
     "nova",
