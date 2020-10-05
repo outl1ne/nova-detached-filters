@@ -15,9 +15,9 @@ This [Laravel Nova](https://nova.laravel.com/) package allows you to place filte
 
 ## Screenshots
 
-![Large Card](docs/large.png)
+![Large Card](./docs/large.png)
 
-![Small Cards](docs/small.png)
+![Small Cards](./docs/small.png)
 
 
 ## Installation
