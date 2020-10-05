@@ -10,7 +10,6 @@
           :filter="item"
           :resource-name="resourceName"
           @handleFilterChanged="handleFilterChanged"
-          :with-reset="shouldShowResetFilterBtn(item)"
           @resetFilter="resetFilter"
         />
 
@@ -23,7 +22,6 @@
           :filter="filter"
           :resource-name="resourceName"
           @handleFilterChanged="handleFilterChanged"
-          :with-reset="shouldShowResetFilterBtn(filter)"
           @resetFilter="resetFilter"
         />
       </div>
@@ -76,7 +74,6 @@ export default {
   }),
 
   mounted() {
-    console.log(this.card.filters);
     if (this.shouldPersistFilters) {
       if (this.persistedFilters && this.persistedFilters[this.resourceName]) this.loadPersistedFilters();
       else this.initializePersistedFilters();
@@ -96,10 +93,6 @@ export default {
       });
 
       this.handleFilterChanged(filter);
-    },
-
-    shouldShowResetFilterBtn(filter) {
-      return filter.withReset || this.card.withReset;
     },
 
     isFilterComponent(item) {

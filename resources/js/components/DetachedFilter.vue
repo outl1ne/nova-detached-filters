@@ -11,7 +11,7 @@
     />
 
     <svg
-      v-if="withReset"
+      v-if="filter.withReset"
       class="reset-filter-btn"
       @click="this.$emit('resetFilter', filter)"
       xmlns="http://www.w3.org/2000/svg"
@@ -28,9 +28,6 @@
 
 <script>
 export default {
-  props: ['filter', 'width', 'withReset', 'resourceName'],
-  mounted() {
-    console.log(this.filter);
-  },
+  props: ['filter', 'width', 'resourceName'],
 };
 </script>
