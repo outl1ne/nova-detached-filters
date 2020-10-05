@@ -30,7 +30,7 @@ composer require optimistdigital/nova-detached-filters
 
 ## Usage
 
-Pass the filters you wish to detach from the filter menu and show on a card to `NovaDetachedFilters` class.
+Pass the filters you wish to detach from the filter menu and show on a card to `NovaDetachedFilters` class.  
 **NB: Filters you wish to detach must also be defined in `filters()` function.**
 
 
@@ -63,7 +63,7 @@ protected function myFilters()
 ## Customization
 
 ### Widths
-You can define the width of the filter using `withMeta()`.
+You can define the width of the filter using `withMeta()`.  
 To see available width options, check out [Tailwind width classes](https://tailwindcss.com/docs/width#app)
 
 ```php
@@ -78,7 +78,7 @@ public function cards(Request $request)
 }
 ```
 
-Define the width of the card if you wish to have multiple filter cards side-by-side.
+Define the width of the card if you wish to have multiple filter cards side-by-side.  
 **Width classes should be passed without `w-` in front of it.**
 
 ```php
@@ -124,7 +124,7 @@ public function cards(Request $request)
 ```
 
 ### Storing filter state
-When you are working with multiple resources and large group of filters assigning filters every time you navigate is a hassle.
+When you are working with multiple resources and large group of filters assigning filters every time you navigate is a hassle.  
 You can call `withPersist()` function on `NovaDetachedFilters` that will render a lock button top-right corner of the card.
 Upon clicking the button, the lock will turn green stating that current filters are saved to `localStorage`.
 
