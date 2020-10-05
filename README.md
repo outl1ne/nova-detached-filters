@@ -140,7 +140,7 @@ public function cards(Request $request)
 ```
 
 ### Columns
-When working with large boolean filters or pill filters that are the height of multiple regular filters, you can wrap filters inside `DetachedFiltersColumn` to easily wrap fields in columns.
+When working with large boolean filters or pill filters that are the height of multiple regular filters, you can wrap filters inside `DetachedFiltersColumn` to easily wrap them in columns.
 
 `DetachedFilterColumn` class takes two arguments `$filters` and `$width`.
 Width of the column will default to `w-auto` if not passed.
