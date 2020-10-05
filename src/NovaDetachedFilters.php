@@ -2,7 +2,12 @@
 
 namespace OptimistDigital\NovaDetachedFilters;
 
+use ArrayAccess;
+use Illuminate\Contracts\Routing\UrlRoutable;
+use JsonSerializable;
 use Laravel\Nova\Card;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\ResolvesFilters;
 
 class NovaDetachedFilters extends Card
 {
@@ -11,9 +16,10 @@ class NovaDetachedFilters extends Card
     protected bool $withReset = false;
     protected bool $persistFilters = false;
 
-    public function __construct($filters = [])
+    public function __construct($filters)
     {
         $this->filters = $filters;
+
     }
 
     public function component()
