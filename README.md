@@ -124,7 +124,7 @@ public function cards(Request $request)
 ```
 
 ### Storing filter state
-When you are working with multiple resources and large group of filters assigning filters every time you navigate is a hassle.  
+When you are working with multiple resources and large group of filters, assigning them every time you navigate is a hassle.  
 You can call `persistFilters()` function on `NovaDetachedFilters` that will render a lock button top-right corner of the card.
 Upon clicking the button, the lock will turn green stating that current filters are saved to `localStorage`.
 
