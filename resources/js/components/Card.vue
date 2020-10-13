@@ -1,6 +1,6 @@
 <template>
   <card class="flex flex-col nova-detached-filters-card">
-    <div class="px-3 py-4 detached-filters">
+    <div class="px-3 py-4 detached-filters" :class="{ collapsed: collapsedFilters }">
       <div class="relative flex flex-wrap" :class="getWidth(item)" v-for="item in card.filters">
         <!-- Single Filter -->
         <nova-detached-filter
@@ -56,6 +56,22 @@
           />
         </svg>
       </div>
+      <div class="detached-filters-button" v-if="this.card.withToggle">
+        <svg
+          class="toggle-filters-btn"
+          :class="{ collapsed: collapsedFilters }"
+          @click="toggleFilters"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 511.641 511.641"
+          width="20"
+          height="16"
+        >
+          <path
+            xmlns="http://www.w3.org/2000/svg"
+            d="M148.32,255.76L386.08,18c4.053-4.267,3.947-10.987-0.213-15.04c-4.16-3.947-10.667-3.947-14.827,0L125.707,248.293    c-4.16,4.16-4.16,10.88,0,15.04L371.04,508.667c4.267,4.053,10.987,3.947,15.04-0.213c3.947-4.16,3.947-10.667,0-14.827    L148.32,255.76z"
+          />
+        </svg>
+      </div>
     </div>
   </card>
 </template>
@@ -69,9 +85,11 @@ export default {
   data: () => ({
     persistedFilters: JSON.parse(localStorage.getItem('PERSISTED_DETACHED_FILTERS')),
     shouldPersistFilters: JSON.parse(localStorage.getItem('PERSIST_DETACHED_FILTERS')),
+    collapsedFilters: JSON.parse(localStorage.getItem('COLLAPSED_DETACHED_FILTERS')),
   }),
 
   mounted() {
+    console.log(this.card.withToggle);
     if (this.shouldPersistFilters) {
       if (this.persistedFilters && this.persistedFilters[this.resourceName]) this.loadPersistedFilters();
       else this.initializePersistedFilters();
@@ -102,6 +120,11 @@ export default {
       localStorage.setItem('PERSIST_DETACHED_FILTERS', JSON.stringify(this.shouldPersistFilters));
 
       this.initializePersistedFilters();
+    },
+
+    toggleFilters() {
+      this.collapsedFilters = !this.collapsedFilters;
+      localStorage.setItem('COLLAPSED_DETACHED_FILTERS', JSON.stringify(this.collapsedFilters));
     },
 
     loadPersistedFilters() {
@@ -173,6 +196,20 @@ export default {
   .detached-filters {
     display: flex;
     flex-wrap: wrap;
+    overflow: hidden;
+    max-height: 100vh;
+    opacity: 1;
+
+    transition: all 0.5s $transition;
+    will-change: max-height, transform, opacity, padding-top, padding-bottom;
+
+    &.collapsed {
+      opacity: 0;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      transform: translateY(-10%);
+      max-height: 0;
+    }
   }
 
   .detached-filter {
@@ -210,6 +247,8 @@ export default {
       padding: 0.5rem 1rem;
       background-color: var(--white);
       border-color: var(grey);
+      display: flex;
+      align-items: center;
 
       svg {
         cursor: pointer;
@@ -246,6 +285,15 @@ export default {
     &:hover {
       opacity: 1;
       transform: rotate(-120deg);
+    }
+  }
+
+  .toggle-filters-btn {
+    transform: rotate(90deg);
+    transition: all 0.5s $transition;
+
+    &.collapsed {
+      transform: rotate(-90deg);
     }
   }
 }

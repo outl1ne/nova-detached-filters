@@ -139,6 +139,21 @@ public function cards(Request $request)
 }
 ```
 
+### Collapsing card
+If you want to allow collapsing filter card you can call `withToggle()` on`NovaDetachedFilters`.
+By default, this is `false`.
+
+```php
+public function cards(Request $request)
+{
+    return [
+        (new NovaDetachedFilters([
+            new SelectFilter(),
+        ]))->withToggle(),
+    ];
+}
+```
+
 ### Columns
 When working with large boolean filters or pill filters that are the height of multiple regular filters, you can wrap filters inside `DetachedFiltersColumn` to easily wrap them in columns.
 

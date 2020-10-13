@@ -12,6 +12,7 @@ class NovaDetachedFilters extends Card
     public $width = '1/3'; // (full, 1/3, 1/2 etc..)
     protected $filters = [];
     protected $withReset = false;
+    protected $withToggle = false;
     protected $persistFilters = false;
 
     public function __construct($filters)
@@ -43,10 +44,17 @@ class NovaDetachedFilters extends Card
         return $this;
     }
 
+    public function withToggle(bool $value = true)
+    {
+        $this->withToggle = $value;
+        return $this;
+    }
+
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
             'withReset' => $this->withReset,
+            'withToggle' => $this->withToggle,
             'persistFilters' => $this->persistFilters,
             'filters' => collect(is_callable($this->filters) ? $this->filters() : $this->filters)->each(function ($filter) {
                 return $filter->jsonSerialize();
