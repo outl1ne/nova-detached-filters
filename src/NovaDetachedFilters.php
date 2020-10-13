@@ -12,14 +12,13 @@ use Laravel\Nova\ResolvesFilters;
 class NovaDetachedFilters extends Card
 {
     public $width = '1/3'; // (full, 1/3, 1/2 etc..)
-    protected array $filters = [];
-    protected bool $withReset = false;
-    protected bool $persistFilters = false;
+    protected $filters = [];
+    protected $withReset = false;
+    protected $persistFilters = false;
 
     public function __construct($filters)
     {
         $this->filters = $filters;
-
     }
 
     public function component()
