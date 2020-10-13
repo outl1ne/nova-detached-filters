@@ -2,9 +2,7 @@
 
 namespace OptimistDigital\NovaDetachedFilters;
 
-use ArrayAccess;
 use Illuminate\Contracts\Routing\UrlRoutable;
-use JsonSerializable;
 use Laravel\Nova\Card;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\ResolvesFilters;
