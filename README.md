@@ -140,7 +140,7 @@ public function cards(Request $request)
 ```
 
 ### Collapsing card
-If you want to allow collapsing filter card you can call `withToggle()` on`NovaDetachedFilters`.
+If you want to allow collapsing filter card you can call `withToggle()` on`NovaDetachedFilters`.  
 By default, this is `false`.
 
 ```php
