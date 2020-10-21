@@ -1,7 +1,7 @@
 <template>
   <card class="flex flex-col nova-detached-filters-card">
     <div class="px-3 py-4 detached-filters" :class="{ collapsed: collapsedFilters }">
-      <div class="relative flex flex-wrap" :class="getWidth(item)" v-for="item in card.filters">
+      <div class="flex flex-wrap" :class="getWidth(item)" v-for="item in card.filters">
         <!-- Single Filter -->
         <nova-detached-filter
           v-if="isFilterComponent(item)"
@@ -196,10 +196,10 @@ export default {
   .detached-filters {
     display: flex;
     flex-wrap: wrap;
-    overflow: hidden;
+    //overflow: hidden;
     max-height: 100vh;
     opacity: 1;
-
+    z-index: 100;
     transition: all 0.5s $transition;
     will-change: max-height, transform, opacity, padding-top, padding-bottom;
 
@@ -226,7 +226,7 @@ export default {
       font-family: Nunito, system-ui, BlinkMacSystemFont, -apple-system, sans-serif;
 
       white-space: nowrap;
-      overflow: hidden;
+      //overflow: hidden;
       text-overflow: ellipsis;
     }
 
