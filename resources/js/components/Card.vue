@@ -89,7 +89,6 @@ export default {
   }),
 
   mounted() {
-    console.log(this.card.withToggle);
     if (this.shouldPersistFilters) {
       if (this.persistedFilters && this.persistedFilters[this.resourceName]) this.loadPersistedFilters();
       else this.initializePersistedFilters();
