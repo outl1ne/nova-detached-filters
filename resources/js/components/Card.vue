@@ -88,7 +88,7 @@ export default {
     collapsedFilters: JSON.parse(localStorage.getItem('COLLAPSED_DETACHED_FILTERS')),
   }),
 
-  mounted() {
+  created() {
     if (this.shouldPersistFilters) {
       if (this.persistedFilters && this.persistedFilters[this.resourceName]) this.loadPersistedFilters();
       else this.initializePersistedFilters();
