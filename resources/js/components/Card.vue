@@ -196,10 +196,9 @@ export default {
   .detached-filters {
     display: flex;
     flex-wrap: wrap;
-    //overflow: hidden;
     max-height: 100vh;
     opacity: 1;
-    z-index: 100;
+    z-index: 10;
     transition: all 0.5s $transition;
     will-change: max-height, transform, opacity, padding-top, padding-bottom;
 
