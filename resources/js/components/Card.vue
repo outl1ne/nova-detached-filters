@@ -143,8 +143,8 @@ export default {
         const updatedFilter = this.getFilter(filter.class);
         if (!updatedFilter) return;
         // Get filter index in localStorage;
-        const filterIndex = this.persistedFilters[this.resourceName].findIndex(filter => filter.key === filter.class);
-        if (!filterIndex || filterIndex <= 0 || !this.persistedFilters[this.resourceName][filterIndex]) {
+        const filterIndex = this.persistedFilters[this.resourceName].findIndex(f => filter.class === f.filterClass);
+        if (!!filterIndex || filterIndex < 0 || !this.persistedFilters[this.resourceName][filterIndex]) {
           // If key-value pair doesn't exist in localStorage, save new
           this.persistedFilters[this.resourceName].push({
             filterClass: filter.class,
