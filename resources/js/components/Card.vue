@@ -93,6 +93,10 @@ export default {
       if (this.persistedFilters && this.persistedFilters[this.resourceName]) this.loadPersistedFilters();
       else this.initializePersistedFilters();
     }
+
+    this.$store.subscribeAction((action, state) => {
+      if (action.type === `${this.resourceName}/resetFilterState`) this.initializePersistedFilters();
+    });
   },
 
   methods: {
