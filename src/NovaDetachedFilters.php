@@ -2,10 +2,7 @@
 
 namespace OptimistDigital\NovaDetachedFilters;
 
-use Illuminate\Contracts\Routing\UrlRoutable;
 use Laravel\Nova\Card;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\ResolvesFilters;
 
 class NovaDetachedFilters extends Card
 {
@@ -14,6 +11,7 @@ class NovaDetachedFilters extends Card
     protected $withReset = false;
     protected $withToggle = false;
     protected $persistFilters = false;
+    protected $perPageOptions = null;
 
     public function __construct($filters)
     {
@@ -50,12 +48,25 @@ class NovaDetachedFilters extends Card
         return $this;
     }
 
+    public function withPerPage($perPageOptions = null)
+    {
+        $this->perPageOptions = $perPageOptions;
+        return $this;
+    }
+
+    private function getPerPageOptions()
+    {
+        if (is_callable($this->perPageOptions)) return call_user_func($this->perPageOptions);
+        return is_array($this->perPageOptions) ? $this->perPageOptions : null;
+    }
+
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
             'withReset' => $this->withReset,
             'withToggle' => $this->withToggle,
             'persistFilters' => $this->persistFilters,
+            'perPageOptions' => $this->getPerPageOptions(),
             'filters' => collect(is_callable($this->filters) ? $this->filters() : $this->filters)->each(function ($filter) {
                 return $filter->jsonSerialize();
             }),

@@ -27,7 +27,19 @@
       </div>
     </div>
     <div class="detached-filters-buttons">
-      <div class="detached-filters-button" v-if="this.card.withReset">
+      <div class="detached-filters-button per-page-button" v-if="hasPerPageOptions">
+        <select
+          slot="select"
+          class="block w-full form-control-sm form-select"
+          :value="currentPerPage"
+          @change="perPageChanged($event)"
+        >
+          <option v-for="option in perPageOptions" :key="option">
+            {{ option }}
+          </option>
+        </select>
+      </div>
+      <div class="detached-filters-button" v-if="card.withReset">
         <svg
           class="reset-filter-btn"
           @click="clearAllFilters()"
@@ -45,7 +57,7 @@
           />
         </svg>
       </div>
-      <div class="detached-filters-button" v-if="this.card.persistFilters">
+      <div class="detached-filters-button" v-if="card.persistFilters">
         <svg
           class="lock-filters-btn"
           :class="{ active: shouldPersistFilters }"
@@ -61,7 +73,7 @@
           />
         </svg>
       </div>
-      <div class="detached-filters-button" v-if="this.card.withToggle">
+      <div class="detached-filters-button" v-if="card.withToggle">
         <svg
           class="toggle-filters-btn"
           :class="{ collapsed: collapsedFilters }"
@@ -82,10 +94,10 @@
 </template>
 
 <script>
-import { Filterable, InteractsWithQueryString } from 'laravel-nova';
+import { Filterable, InteractsWithQueryString, PerPageable } from 'laravel-nova';
 
 export default {
-  mixins: [Filterable, InteractsWithQueryString],
+  mixins: [Filterable, InteractsWithQueryString, PerPageable],
   props: ['card', 'resourceName', 'viaResource', 'viaRelationship'],
   data: () => ({
     persistedFilters: JSON.parse(localStorage.getItem('PERSISTED_DETACHED_FILTERS')),
@@ -181,11 +193,46 @@ export default {
       this.initializePersistedFilters();
       this.clearSelectedFilters();
     },
+
+    /**
+     * Update the desired amount of resources per page.
+     */
+    perPageChanged(event) {
+      // TODO: Emit a function and catch it in filter-menu.
+    },
   },
 
   computed: {
     pageParameter() {
       return this.viaRelationship ? this.viaRelationship + '_page' : this.resourceName + '_page';
+    },
+
+    /**
+     * Resource card has per-page options
+     */
+    hasPerPageOptions() {
+      return Array.isArray(this.perPageOptions);
+    },
+
+    /**
+     * The per-page options configured for this resource.
+     */
+    perPageOptions() {
+      return this.card.perPageOptions;
+    },
+
+    /**
+     * Get the current per page value from the query string.
+     */
+    currentPerPage() {
+      return this.$route.query[this.perPageParameter] || this.perPageOptions[0];
+    },
+
+    /**
+     * Get the name of the per page query string variable.
+     */
+    perPageParameter() {
+      return this.viaRelationship ? this.viaRelationship + '_per_page' : this.resourceName + '_per_page';
     },
   },
 };
@@ -249,7 +296,6 @@ export default {
     .detached-filters-button {
       padding: 0.5rem;
       background-color: var(--white);
-      border-color: var(grey);
       display: flex;
       align-items: center;
 
@@ -263,6 +309,19 @@ export default {
 
       &:first-of-type {
         border-top-left-radius: 0.25rem;
+      }
+
+      &.per-page-button {
+        padding: 0;
+
+        select {
+          border-radius: 0;
+          border-color: transparent;
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
       }
     }
   }
