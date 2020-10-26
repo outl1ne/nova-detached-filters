@@ -3,9 +3,12 @@
 namespace OptimistDigital\NovaDetachedFilters;
 
 use JsonSerializable;
+use Laravel\Nova\Makeable;
 
 class DetachedFilterColumn implements JsonSerializable
 {
+    use Makeable;
+
     protected $filters = [];
     protected $width = 'w-auto';
     protected $name = 'detached-filter-column';
