@@ -294,7 +294,7 @@ export default {
     right: 0;
 
     .detached-filters-button {
-      padding: 0.5rem;
+      padding: 0.5rem 0.6rem;
       background-color: var(--white);
       display: flex;
       align-items: center;
