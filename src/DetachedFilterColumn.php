@@ -9,7 +9,7 @@ class DetachedFilterColumn implements JsonSerializable
 {
     use Makeable;
 
-    protected $filters = [];
+    public $filters = [];
     protected $width = 'w-auto';
     protected $name = 'detached-filter-column';
 

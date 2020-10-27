@@ -7,7 +7,7 @@ use Laravel\Nova\Card;
 class NovaDetachedFilters extends Card
 {
     public $width = '1/3'; // (full, 1/3, 1/2 etc..)
-    protected $filters = [];
+    public $filters = [];
     protected $withReset = false;
     protected $withToggle = false;
     protected $persistFilters = false;
@@ -48,16 +48,29 @@ class NovaDetachedFilters extends Card
         return $this;
     }
 
-    public function withPerPage($perPageOptions = null)
+    public function getFilters($filters = null)
     {
-        $this->perPageOptions = $perPageOptions;
-        return $this;
+        $flatFilters = [];
+        if (empty($filters)) $filters = is_callable($this->filters) ? $this->filters() : $this->filters;
+
+        collect($filters)->each(function ($filter) use (&$flatFilters) {
+            if (property_exists($filter, 'filters')) {
+                $childFilters = $this->getFilters($filter->filters);
+                $flatFilters = array_merge($childFilters, $flatFilters);
+                return true;
+            }
+
+            return $flatFilters[] = $filter;
+        });
+
+        return $flatFilters;
     }
 
-    private function getPerPageOptions()
+    public function serializeFilters()
     {
-        if (is_callable($this->perPageOptions)) return call_user_func($this->perPageOptions);
-        return is_array($this->perPageOptions) ? $this->perPageOptions : null;
+        return collect($this->getFilters())->each(function ($filter) {
+            return $filter->jsonSerialize();
+        });
     }
 
     public function jsonSerialize()
@@ -66,10 +79,7 @@ class NovaDetachedFilters extends Card
             'withReset' => $this->withReset,
             'withToggle' => $this->withToggle,
             'persistFilters' => $this->persistFilters,
-            'perPageOptions' => $this->getPerPageOptions(),
-            'filters' => collect(is_callable($this->filters) ? $this->filters() : $this->filters)->each(function ($filter) {
-                return $filter->jsonSerialize();
-            }),
+            'filters' => $this->serializeFilters(),
         ]);
     }
 }
