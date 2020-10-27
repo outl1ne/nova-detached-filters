@@ -42,6 +42,12 @@ class NovaDetachedFilters extends Card
         return $this;
     }
 
+    public function withPerPage($perPageOptions = null)
+    {
+        $this->perPageOptions = $perPageOptions;
+        return $this;
+    }
+
     public function withToggle(bool $value = true)
     {
         $this->withToggle = $value;
@@ -66,11 +72,17 @@ class NovaDetachedFilters extends Card
         return $flatFilters;
     }
 
-    public function serializeFilters()
+    private function serializeFilters()
     {
         return collect($this->getFilters())->each(function ($filter) {
             return $filter->jsonSerialize();
         });
+    }
+
+    private function getPerPageOptions()
+    {
+        if (is_callable($this->perPageOptions)) return call_user_func($this->perPageOptions);
+        return is_array($this->perPageOptions) ? $this->perPageOptions : null;
     }
 
     public function jsonSerialize()
@@ -78,6 +90,7 @@ class NovaDetachedFilters extends Card
         return array_merge(parent::jsonSerialize(), [
             'withReset' => $this->withReset,
             'withToggle' => $this->withToggle,
+            'perPageOptions' => $this->getPerPageOptions(),
             'persistFilters' => $this->persistFilters,
             'filters' => $this->serializeFilters(),
         ]);

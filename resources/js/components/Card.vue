@@ -198,7 +198,8 @@ export default {
      * Update the desired amount of resources per page.
      */
     perPageChanged(event) {
-      // TODO: Emit a function and catch it in filter-menu.
+      this.updateQueryString({ [this.perPageParameter]: event.target.value });
+      Nova.$emit('refresh-resources');
     },
   },
 
