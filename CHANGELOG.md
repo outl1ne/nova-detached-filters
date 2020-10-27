@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Filters can now be standalone in `NovaDetachedFilters` when using `HasDetachedFilters` trait.
+- Added `withPerPage` function to `NovaDetachedFilters`. More documentation in readme.
 - Added `::make()` to `DetachedFilterColumn`.
 
 ### Changed
