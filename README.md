@@ -30,9 +30,7 @@ composer require optimistdigital/nova-detached-filters
 
 ## Usage
 
-Pass the filters you wish to detach from the filter menu and show on a card to `NovaDetachedFilters` class.  
-**NB: Filters you wish to detach must also be defined in `filters()` function.**
-
+Pass the filters you wish to detach from the filter menu and show on a card to `NovaDetachedFilters` class.
 
 ```php
 use OptimistDigital\NovaDetachedFilters\NovaDetachedFilters;
@@ -57,6 +55,37 @@ protected function myFilters()
         new PillFilter(),
         // ...
     ];
+}
+```
+
+## HasDetachedFilters
+If you only wish to show some filters on `DetachedFilters` card, you must use `HasDetachedFilters` trait.
+
+```php
+use OptimistDigital\NovaDetachedFilters\NovaDetachedFilters;
+use \OptimistDigital\NovaDetachedFilters\HasDetachedFilters;
+
+class ExampleResource extends Resource
+{
+    use HasDetachedFilters; // Needs to have this trait
+
+    public function cards()
+    {
+        return [
+            new NovaDetachedFilters([
+                new SelectFilter, // Showed only on card
+                new SelectFilter2, // Showed both in dropdown menu and on card
+            ]),
+        ];
+    }
+
+    public function filters()
+    {
+        return [
+            new SelectFilter2, // Showed both in dropdown menu and on card
+            new SelectFilter3 // Shown only in dropdown menu
+        ];
+    }
 }
 ```
 
