@@ -20,7 +20,7 @@
     "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
-    "laravel-nova": "^1.5.0",
-    "vue": "^2.5.0"
+    "vue": "^2.5.0",
+    "laravel-nova": "^1.5.0"
   }
 }
