@@ -100,6 +100,12 @@ export default {
     perPageOptions: Array,
   },
 
+  mounted() {
+    Nova.$on('change-per-page', value => {
+      this.$emit('per-page-changed', value);
+    });
+  },
+
   methods: {
     trashedChanged(event) {
       this.$emit('trashed-changed', event.target.value);
