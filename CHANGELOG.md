@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `change-per-page` event listener to update `per-page`.
 
+### Changed
+
+- Fixed `DetachedFilterColumn` not showing filters in columns
+
 ## [1.0.4] - 2020-10-26
 
 ### Added

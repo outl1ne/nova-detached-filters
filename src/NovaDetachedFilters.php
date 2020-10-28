@@ -54,14 +54,19 @@ class NovaDetachedFilters extends Card
         return $this;
     }
 
-    public function getFilters($filters = null)
+    public function getFilters()
+    {
+        return is_callable($this->filters) ? $this->filters() : $this->filters;
+    }
+
+    public function getFlatFilters($filters = null)
     {
         $flatFilters = [];
-        if (empty($filters)) $filters = is_callable($this->filters) ? $this->filters() : $this->filters;
+        if (empty($filters)) $filters = $this->getFilters();
 
         collect($filters)->each(function ($filter) use (&$flatFilters) {
             if (property_exists($filter, 'filters')) {
-                $childFilters = $this->getFilters($filter->filters);
+                $childFilters = $this->getFlatFilters($filter->filters);
                 $flatFilters = array_merge($childFilters, $flatFilters);
                 return true;
             }

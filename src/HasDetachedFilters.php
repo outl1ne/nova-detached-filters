@@ -56,7 +56,7 @@ trait HasDetachedFilters
         $detachedFilters = [];
 
         $detachedFilterCards->map(function ($card) use (&$detachedFilters) {
-            $detachedFilters = array_merge($detachedFilters, $card->getFilters());
+            $detachedFilters = array_merge($detachedFilters, $card->getFlatFilters());
         });
 
         return collect($detachedFilters);
