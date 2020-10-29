@@ -136,6 +136,7 @@ export default {
       localStorage.setItem('PERSIST_DETACHED_FILTERS', JSON.stringify(this.shouldPersistFilters));
 
       this.initializePersistedFilters();
+      if (this.shouldPersistFilters) this.loadPersistedFromFilters();
     },
 
     toggleFilters() {
@@ -182,6 +183,10 @@ export default {
       return this.$store.getters[`${this.resourceName}/getFilter`](filterKey);
     },
 
+    getFilters() {
+      return this.$store.getters[`${this.resourceName}/filters`];
+    },
+
     initializePersistedFilters() {
       if (!this.persistedFilters) this.persistedFilters = {};
       this.persistedFilters[this.resourceName] = [];
@@ -199,6 +204,20 @@ export default {
      */
     perPageChanged(event) {
       Nova.$emit('change-per-page', event.target.value);
+    },
+
+    /**
+     * Load persisted filters from existing filters
+     */
+    loadPersistedFromFilters() {
+      this.getFilters().forEach(filterItem => {
+        this.persistedFilters[this.resourceName].push({
+          filterClass: filterItem.class,
+          value: filterItem.currentValue,
+        });
+      });
+
+      localStorage.setItem('PERSISTED_DETACHED_FILTERS', JSON.stringify(this.persistedFilters));
     },
   },
 
@@ -259,10 +278,16 @@ export default {
       padding-bottom: 0.5rem;
       transform: translateY(-10%);
       max-height: 0;
+      overflow: hidden;
+      cursor: default;
     }
   }
 
   .detached-filter {
+    transform: translate(0);
+    height: auto;
+    opacity: 1;
+
     > div:first-of-type {
       width: 100%;
     }
