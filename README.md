@@ -184,7 +184,9 @@ public function cards(Request $request)
 ```
 
 ### Per page options
-Shows the `per-page` dropdown in `DetachedFilter` card. You need to pass in the `perPageOptions` defined in your resource.
+Shows the `per-page` dropdown on `DetachedFilter` card. You need to pass in the `perPageOptions` defined in your resource.
+
+Optionally you can pass in `false / true` as a second parameter to show/hide the `per-page` filter in dropdown menu. This will be `true` by default.
 
 ```php
 public function cards(Request $request)
@@ -192,7 +194,7 @@ public function cards(Request $request)
     return [
         (new NovaDetachedFilters([
             // ...
-        ]))->withPerPage($request->resource()::perPageOptions()),
+        ]))->withPerPage($request->resource()::perPageOptions(), false),
     ];
 }
 ```
