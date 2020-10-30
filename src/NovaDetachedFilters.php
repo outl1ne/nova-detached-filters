@@ -42,9 +42,10 @@ class NovaDetachedFilters extends Card
         return $this;
     }
 
-    public function withPerPage($perPageOptions = null)
+    public function withPerPage($perPageOptions = null, $showInMenu = true)
     {
         $this->perPageOptions = $perPageOptions;
+        $this->withMeta(['showPerPageInMenu' => $showInMenu]);
         return $this;
     }
 

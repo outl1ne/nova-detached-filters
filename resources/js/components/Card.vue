@@ -100,6 +100,7 @@ export default {
   mixins: [Filterable, InteractsWithQueryString, PerPageable],
   props: ['card', 'resourceName', 'viaResource', 'viaRelationship'],
   data: () => ({
+    perPageStyle: null,
     persistedFilters: JSON.parse(localStorage.getItem('PERSISTED_DETACHED_FILTERS')),
     shouldPersistFilters: JSON.parse(localStorage.getItem('PERSIST_DETACHED_FILTERS')),
     collapsedFilters: JSON.parse(localStorage.getItem('COLLAPSED_DETACHED_FILTERS')),
@@ -110,6 +111,14 @@ export default {
       if (this.persistedFilters && this.persistedFilters[this.resourceName]) this.loadPersistedFilters();
       else this.initializePersistedFilters();
     }
+  },
+
+  mounted() {
+    if (!this.card.showPerPageInMenu) this.perPageDropdownStyle(true);
+  },
+
+  destroyed() {
+    if (!this.card.showPerPageInMenu) this.perPageDropdownStyle(false);
   },
 
   methods: {
@@ -218,6 +227,19 @@ export default {
       });
 
       localStorage.setItem('PERSISTED_DETACHED_FILTERS', JSON.stringify(this.persistedFilters));
+    },
+
+    /**
+     * Remove or add dropdown per-page filter style tag to head
+     */
+    perPageDropdownStyle(addStyle) {
+      const css = "div[dusk='filter-per-page'] { display: none !important }";
+      const head = document.head || document.getElementsByTagName('head')[0];
+
+      if (!this.perPageStyle) this.perPageStyle = document.createElement('style');
+      addStyle ? head.appendChild(this.perPageStyle) : head.removeChild(this.perPageStyle);
+
+      if (addStyle) this.perPageStyle.appendChild(document.createTextNode(css));
     },
   },
 
