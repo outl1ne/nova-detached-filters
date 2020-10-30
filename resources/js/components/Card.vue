@@ -306,7 +306,6 @@ export default {
   }
 
   .detached-filter {
-    transform: translate(0);
     height: auto;
     opacity: 1;
 
