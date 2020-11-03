@@ -19,15 +19,15 @@ class UserResource extends Resource
     {
         return [
             NovaDetachedFilters::make([
-                FirstFilter::make()
-            ])
+                FirstFilter::make(),
+            ]),
         ];
     }
 
     public function filters(Request $request)
     {
         return [
-            SecondFilter::make()
+            SecondFilter::make(),
         ];
     }
 
