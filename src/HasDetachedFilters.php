@@ -2,8 +2,8 @@
 
 namespace OptimistDigital\NovaDetachedFilters;
 
-use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 trait HasDetachedFilters
@@ -67,6 +67,7 @@ trait HasDetachedFilters
         $filters->map(function (&$filter) use ($showInMenu) {
             $filter->withMeta(['showInMenu' => $showInMenu]);
             $filter->class = get_class($filter);
+
             return $filter;
         });
 

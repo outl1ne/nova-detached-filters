@@ -25,20 +25,25 @@ class NovaDetachedFilters extends Card
 
     public function width($width)
     {
-        if (empty($width)) return $this;
+        if (empty($width)) {
+            return $this;
+        }
         $this->width = $width;
+
         return $this;
     }
 
     public function withReset(bool $value = true)
     {
         $this->withReset = $value;
+
         return $this;
     }
 
     public function persistFilters(bool $value = true)
     {
         $this->persistFilters = $value;
+
         return $this;
     }
 
@@ -46,12 +51,14 @@ class NovaDetachedFilters extends Card
     {
         $this->perPageOptions = $perPageOptions;
         $this->withMeta(['showPerPageInMenu' => $showInMenu]);
+
         return $this;
     }
 
     public function withToggle(bool $value = true)
     {
         $this->withToggle = $value;
+
         return $this;
     }
 
@@ -63,12 +70,15 @@ class NovaDetachedFilters extends Card
     public function getFlatFilters($filters = null)
     {
         $flatFilters = [];
-        if (empty($filters)) $filters = $this->getFilters();
+        if (empty($filters)) {
+            $filters = $this->getFilters();
+        }
 
         collect($filters)->each(function ($filter) use (&$flatFilters) {
             if (property_exists($filter, 'filters')) {
                 $childFilters = $this->getFlatFilters($filter->filters);
                 $flatFilters = array_merge($childFilters, $flatFilters);
+
                 return true;
             }
 
@@ -87,7 +97,10 @@ class NovaDetachedFilters extends Card
 
     private function getPerPageOptions()
     {
-        if (is_callable($this->perPageOptions)) return call_user_func($this->perPageOptions);
+        if (is_callable($this->perPageOptions)) {
+            return call_user_func($this->perPageOptions);
+        }
+
         return is_array($this->perPageOptions) ? $this->perPageOptions : null;
     }
 
