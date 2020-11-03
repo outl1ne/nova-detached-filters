@@ -209,6 +209,19 @@ export default {
     },
 
     /**
+     * Handle a filter state change.
+     */
+    filterChanged() {
+      const encodedFilters = this.$store.getters[`${this.resourceName}/currentEncodedFilters`];
+
+      if (this.$route.query[this.pageParameter] !== '1' || this.$route.query[this.filterParameter] !== encodedFilters)
+        this.updateQueryString({
+          [this.pageParameter]: 1,
+          [this.filterParameter]: encodedFilters,
+        });
+    },
+
+    /**
      * Update the desired amount of resources per page.
      */
     perPageChanged(event) {
