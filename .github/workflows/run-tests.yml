@@ -47,4 +47,4 @@ jobs:
             NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
 
       -   name: Execute tests
-          run: vendor/bin/phpunit
+          run: vendor/bin/phpunit tests
