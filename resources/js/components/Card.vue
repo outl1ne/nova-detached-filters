@@ -1,6 +1,6 @@
 <template>
   <card class="flex flex-col nova-detached-filters-card">
-    <div class="px-3 py-4 detached-filters" :class="{ collapsed: collapsedFilters }">
+    <div class="px-3 py-4 detached-filters" :class="{ collapsed: isCollapsed }">
       <div class="flex flex-wrap" :class="getWidth(item)" v-for="item in card.filters">
         <!-- Single Filter -->
         <nova-detached-filter
@@ -60,8 +60,8 @@
       <div class="detached-filters-button" v-if="card.persistFilters">
         <svg
           class="lock-filters-btn"
-          :class="{ active: shouldPersistFilters }"
-          @click="toggleShouldPersistFilters"
+          :class="{ active: isPersisting }"
+          @click="toggleIsPersisting"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="16"
@@ -76,8 +76,8 @@
       <div class="detached-filters-button" v-if="card.withToggle">
         <svg
           class="toggle-filters-btn"
-          :class="{ collapsed: collapsedFilters }"
-          @click="toggleFilters"
+          :class="{ collapsed: isCollapsed }"
+          @click="toggleIsCollapsed"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 511.641 511.641"
           width="20"
@@ -102,12 +102,18 @@ export default {
   data: () => ({
     perPageStyle: null,
     persistedFilters: JSON.parse(localStorage.getItem('PERSISTED_DETACHED_FILTERS')),
-    shouldPersistFilters: JSON.parse(localStorage.getItem('PERSIST_DETACHED_FILTERS')),
-    collapsedFilters: JSON.parse(localStorage.getItem('COLLAPSED_DETACHED_FILTERS')),
+    persistedResources: JSON.parse(localStorage.getItem('PERSIST_DETACHED_FILTERS')),
+    collapsedResources: JSON.parse(localStorage.getItem('COLLAPSED_DETACHED_FILTERS')),
+
+    isPersisting: false,
+    isCollapsed: false,
   }),
 
   created() {
-    if (this.shouldPersistFilters) {
+    this.initialiseIsPersisting();
+    this.initialiseIsCollapsed();
+
+    if (this.isPersisting) {
       if (this.persistedFilters && this.persistedFilters[this.resourceName]) this.loadPersistedFilters();
       else this.initializePersistedFilters();
     }
@@ -140,17 +146,27 @@ export default {
       return !!item.options && !!item.component;
     },
 
-    toggleShouldPersistFilters() {
-      this.shouldPersistFilters = !this.shouldPersistFilters;
-      localStorage.setItem('PERSIST_DETACHED_FILTERS', JSON.stringify(this.shouldPersistFilters));
+    toggleIsPersisting() {
+      if (!this.persistedResources) this.persistedResources = {};
+      if (this.persistedResources[this.resourceName]) this.persistedResources[this.resourceName] = [];
+
+      this.persistedResources[this.resourceName] = !this.isPersisting;
+      this.isPersisting = !this.isPersisting;
+
+      localStorage.setItem('PERSIST_DETACHED_FILTERS', JSON.stringify(this.persistedResources));
 
       this.initializePersistedFilters();
-      if (this.shouldPersistFilters) this.loadPersistedFromFilters();
+      if (this.isPersisting) this.loadPersistedFromFilters();
     },
 
-    toggleFilters() {
-      this.collapsedFilters = !this.collapsedFilters;
-      localStorage.setItem('COLLAPSED_DETACHED_FILTERS', JSON.stringify(this.collapsedFilters));
+    toggleIsCollapsed() {
+      if (!this.collapsedResources) this.collapsedResources = {};
+      if (this.collapsedResources[this.resourceName]) this.collapsedResources[this.resourceName] = [];
+
+      this.collapsedResources[this.resourceName] = !this.isCollapsed;
+      this.isCollapsed = !this.isCollapsed;
+
+      localStorage.setItem('COLLAPSED_DETACHED_FILTERS', JSON.stringify(this.collapsedResources));
     },
 
     loadPersistedFilters() {
@@ -165,7 +181,7 @@ export default {
     },
 
     handleFilterChanged(filter) {
-      if (this.shouldPersistFilters) {
+      if (this.isPersisting) {
         // Get updated filter from $store;
         const updatedFilter = this.getFilter(filter.class);
         if (!updatedFilter) return;
@@ -253,6 +269,16 @@ export default {
       addStyle ? head.appendChild(this.perPageStyle) : head.removeChild(this.perPageStyle);
 
       if (addStyle) this.perPageStyle.appendChild(document.createTextNode(css));
+    },
+
+    initialiseIsPersisting() {
+      if (!this.persistedResources || !this.persistedResources[this.resourceName]) return (this.isPersisting = false);
+      this.isPersisting = this.persistedResources[this.resourceName];
+    },
+
+    initialiseIsCollapsed() {
+      if (!this.collapsedResources || !this.collapsedResources[this.resourceName]) return (this.isCollapsed = false);
+      this.isCollapsed = this.collapsedResources[this.resourceName];
     },
   },
 
