@@ -11,7 +11,7 @@ trait HasDetachedFilters
     /**
      * Get the filters that are available for the given request.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param NovaRequest $request
      * @return Collection
      */
     public function availableFilters(NovaRequest $request)
@@ -22,7 +22,7 @@ trait HasDetachedFilters
     /**
      * Get the filters for the given request.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param NovaRequest $request
      * @return Collection
      */
     public function resolveFilters(NovaRequest $request)
@@ -36,7 +36,7 @@ trait HasDetachedFilters
     /**
      * Get the filters available on the entity.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -47,7 +47,7 @@ trait HasDetachedFilters
     /**
      * Get detached filters for the given request.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param NovaRequest $request
      * @return Collection
      */
     private function resolveDetachedFilters(NovaRequest $request)
