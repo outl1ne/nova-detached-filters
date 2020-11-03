@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "plugin:vue/essential",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error"
+    ]
+  }
+}

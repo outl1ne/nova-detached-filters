@@ -1,28 +1,27 @@
 <template>
   <card class="flex flex-col nova-detached-filters-card">
     <div class="px-3 py-4 detached-filters" :class="{ collapsed: isCollapsed }">
-      <div class="flex flex-wrap" :class="getWidth(item)" v-for="item in card.filters">
+      <div class="flex flex-wrap" :class="getWidth(item)" v-for="item in card.filters" :key="item.key">
         <!-- Single Filter -->
         <nova-detached-filter
           v-if="isFilterComponent(item)"
           :width="'w-full'"
-          :key="item.key"
           :filter="item"
           :resource-name="resourceName"
-          @handleFilterChanged="handleFilterChanged"
-          @resetFilter="resetFilter"
+          @handle-filter-changed="handleFilterChanged"
+          @reset-filter="resetFilter"
         />
 
         <!-- Filter Column -->
         <nova-detached-filter
           v-else
           v-for="filter in item.filters"
+          v-bind:key="filter.key"
           :width="getWidth(filter)"
-          :key="filter.key"
           :filter="filter"
           :resource-name="resourceName"
-          @handleFilterChanged="handleFilterChanged"
-          @resetFilter="resetFilter"
+          @handle-filter-changed="handleFilterChanged"
+          @reset-filter="resetFilter"
         />
       </div>
     </div>

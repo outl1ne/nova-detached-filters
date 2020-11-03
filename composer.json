@@ -27,11 +27,21 @@
     }
   ],
   "require": {
-    "php": ">=7.1.0"
+    "php": ">=7.1.0",
+    "laravel/nova": "^2.0 || ^3.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.3",
+    "phpunit/phpunit": "^9.4"
   },
   "autoload": {
     "psr-4": {
       "OptimistDigital\\NovaDetachedFilters\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "OptimistDigital\\NovaDetachedFilters\\Tests\\": "tests/"
     }
   },
   "extra": {
@@ -44,6 +54,17 @@
   "config": {
     "sort-packages": true
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    }
+  ],
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "test": [
+      "phpunit tests"
+    ]
+  }
 }
