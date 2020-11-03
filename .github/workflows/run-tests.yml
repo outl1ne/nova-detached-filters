@@ -41,8 +41,10 @@ jobs:
           run: |
             composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
             composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+            composer config http-basic.nova.laravel.com ${NOVA_USERNAME} ${NOVA_PASSWORD}
           env:
-            COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+            NOVA_PASSWORD: ${{ secrets.NOVA_PASSWORD }}
+            NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
 
       -   name: Execute tests
           run: vendor/bin/phpunit
