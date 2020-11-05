@@ -1,0 +1,28 @@
+name: Prettier
+
+on: [ push ]
+
+jobs:
+  run-linter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          node-version: 14
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Run format
+        run: npm run format
+
+      - name: Compile
+          run: npm run prod
+
+      - name: Commit changes
+          uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_message: prettier
+
