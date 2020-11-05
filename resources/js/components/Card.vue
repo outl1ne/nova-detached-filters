@@ -28,6 +28,7 @@
     <div class="detached-filters-buttons">
       <div class="detached-filters-button per-page-button" v-if="hasPerPageOptions">
         <select
+          name="detached-per-page-select"
           slot="select"
           class="block w-full form-control-sm form-select"
           :value="currentPerPage"
@@ -40,6 +41,7 @@
       </div>
       <div class="detached-filters-button" v-if="card.withReset">
         <svg
+          dusk="reset-detached-filters"
           class="reset-filter-btn"
           @click="clearAllFilters()"
           xmlns="http://www.w3.org/2000/svg"
@@ -58,6 +60,7 @@
       </div>
       <div class="detached-filters-button" v-if="card.persistFilters">
         <svg
+          dusk="lock-detached-filters"
           class="lock-filters-btn"
           :class="{ active: isPersisting }"
           @click="toggleIsPersisting"
@@ -74,6 +77,7 @@
       </div>
       <div class="detached-filters-button" v-if="card.withToggle">
         <svg
+          dusk="collapse-detached-filters"
           class="toggle-filters-btn"
           :class="{ collapsed: isCollapsed }"
           @click="toggleIsCollapsed"
