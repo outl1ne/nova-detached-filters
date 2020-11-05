@@ -3,10 +3,8 @@
 namespace OptimistDigital\NovaDetachedFilters\Tests\Fixtures;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\AuthorizedToSee;
 use Laravel\Nova\Resource;
 use Laravel\Nova\Tests\Fixtures\User;
-use OptimistDigital\NovaDetachedFilters\DetachedFilterColumn;
 use OptimistDigital\NovaDetachedFilters\HasDetachedFilters;
 use OptimistDigital\NovaDetachedFilters\NovaDetachedFilters;
 

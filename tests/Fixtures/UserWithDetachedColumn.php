@@ -15,7 +15,7 @@ class UserWithDetachedColumn extends UserResource
                 FirstFilter::make(),
                 DetachedFilterColumn::make([
                     ThirdFilter::make(),
-                ])
+                ]),
             ]),
         ];
     }
