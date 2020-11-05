@@ -1,9 +1,9 @@
-name: run-tests
+name: Tests
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  run-tests:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
@@ -18,7 +18,7 @@ jobs:
           -   laravel: 7.*
               testbench: 5.*
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
     steps:
       -   name: Checkout code

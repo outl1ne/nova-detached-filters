@@ -1,9 +1,9 @@
-name: Check & fix styling
+name: PHP CS
 
 on: [ push ]
 
 jobs:
-  php-cs-fixer:
+  run-php-cs-fixer:
     runs-on: ubuntu-latest
 
     steps:
