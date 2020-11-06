@@ -90,7 +90,7 @@ class NovaDetachedFilters extends Card
 
     private function serializeFilters()
     {
-        return collect($this->getFilters())->each(function ($filter) {
+        return collect($this->getFilters())->map(function (&$filter) {
             return $filter->jsonSerialize();
         });
     }
