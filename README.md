@@ -183,8 +183,9 @@ public function cards(Request $request)
 }
 ```
 
-### Per page options
+### Per page options - NOVA <= 3.15.0
 Shows the `per-page` dropdown on `DetachedFilter` card. You need to pass in the `perPageOptions` defined in your resource.
+**NB: Only works with version 3.15.0 or higher of laravel/nova**
 
 Optionally you can pass in `false / true` as a second parameter to `hide / show` the `per-page` filter in dropdown menu. This will be `true` by default.
 
