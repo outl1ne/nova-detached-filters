@@ -66,7 +66,7 @@ trait HasDetachedFilters
     {
         $filters->map(function (&$filter) use ($showInMenu) {
             $filter->withMeta(['showInMenu' => $showInMenu]);
-            $filter->class = get_class($filter);
+            $filter->class = $filter->key();
 
             return $filter;
         });
