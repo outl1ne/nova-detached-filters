@@ -12,6 +12,7 @@ class NovaDetachedFilters extends Card
     protected $withToggle = false;
     protected $persistFilters = false;
     protected $perPageOptions = null;
+    protected $showPerPageInMenu = true;
 
     public function __construct($filters)
     {
@@ -50,7 +51,7 @@ class NovaDetachedFilters extends Card
     public function withPerPage($perPageOptions = null, $showInMenu = true)
     {
         $this->perPageOptions = $perPageOptions;
-        $this->withMeta(['showPerPageInMenu' => $showInMenu]);
+        $this->showPerPageInMenu = $showInMenu;
 
         return $this;
     }
@@ -60,11 +61,6 @@ class NovaDetachedFilters extends Card
         $this->withToggle = $value;
 
         return $this;
-    }
-
-    public function getFilters()
-    {
-        return is_callable($this->filters) ? $this->filters() : $this->filters;
     }
 
     public function getFlatFilters($filters = null)
@@ -88,11 +84,21 @@ class NovaDetachedFilters extends Card
         return $flatFilters;
     }
 
-    private function serializeFilters()
+    public function getFilters()
     {
-        return collect($this->getFilters())->map(function (&$filter) {
-            return $filter->jsonSerialize();
-        });
+        return is_callable($this->filters) ? $this->filters() : $this->filters;
+    }
+
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'withReset' => $this->withReset,
+            'withToggle' => $this->withToggle,
+            'perPageOptions' => $this->getPerPageOptions(),
+            'showPerPageInMenu' => $this->showPerPageInMenu,
+            'persistFilters' => $this->persistFilters,
+            'filters' => $this->serializeFilters(),
+        ]);
     }
 
     private function getPerPageOptions()
@@ -104,14 +110,10 @@ class NovaDetachedFilters extends Card
         return is_array($this->perPageOptions) ? $this->perPageOptions : null;
     }
 
-    public function jsonSerialize()
+    private function serializeFilters()
     {
-        return array_merge(parent::jsonSerialize(), [
-            'withReset' => $this->withReset,
-            'withToggle' => $this->withToggle,
-            'perPageOptions' => $this->getPerPageOptions(),
-            'persistFilters' => $this->persistFilters,
-            'filters' => $this->serializeFilters(),
-        ]);
+        return collect($this->getFilters())->map(function (&$filter) {
+            return $filter->jsonSerialize();
+        });
     }
 }
