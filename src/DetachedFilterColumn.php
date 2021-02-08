@@ -27,7 +27,7 @@ class DetachedFilterColumn implements JsonSerializable
         return [
             'width' => $this->width,
             'name' => $this->name,
-            'filters' => collect(is_callable($this->filters) ? $this->filters() : $this->filters)->map(function (&$filter) {
+            'filters' => collect(is_callable($this->filters) ? $this->filters() : $this->filters)->map(function ($filter) {
                 return $filter->jsonSerialize();
             }),
         ];

@@ -64,7 +64,7 @@ trait HasDetachedFilters
 
     public static function modifyFilters(Collection $filters, bool $showInMenu)
     {
-        $filters->map(function (&$filter) use ($showInMenu) {
+        $filters->map(function ($filter) use ($showInMenu) {
             $filter->withMeta(['showInMenu' => $showInMenu]);
             $filter->class = $filter->key();
 
