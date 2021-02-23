@@ -37,7 +37,7 @@ use OptimistDigital\NovaDetachedFilters\NovaDetachedFilters;
 
 public function filters()
 {
-    return this->myFilters();
+    return $this->myFilters();
 }
 
 public function cards()
