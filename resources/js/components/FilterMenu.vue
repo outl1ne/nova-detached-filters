@@ -121,7 +121,13 @@ export default {
      * Return the filters from state
      */
     filters() {
-      return this.$store.getters[`${this.resourceName}/filters`].filter(f => !!f.showInMenu);
+      return this.$store.getters[`${this.resourceName}/filters`].filter(f =>
+        /**
+         * Checks whether filter should be shown in menu
+         * Verify showInMenu is defined within f: Fixes #17.
+         */
+        'showInMenu' in f ? !!f.showInMenu : true
+      );
     },
 
     /**
