@@ -13,6 +13,7 @@ class NovaDetachedFilters extends Card
     protected $persistFilters = false;
     protected $perPageOptions = null;
     protected $showPerPageInMenu = true;
+    protected $isPersisting = false;
 
     public function __construct($filters)
     {
@@ -41,9 +42,10 @@ class NovaDetachedFilters extends Card
         return $this;
     }
 
-    public function persistFilters(bool $value = true)
+    public function persistFilters(bool $value = true, bool $default = false)
     {
         $this->persistFilters = $value;
+        $this->isPersisting = $default;
 
         return $this;
     }
@@ -97,6 +99,7 @@ class NovaDetachedFilters extends Card
             'perPageOptions' => $this->getPerPageOptions(),
             'showPerPageInMenu' => $this->showPerPageInMenu,
             'persistFilters' => $this->persistFilters,
+            'isPersisting' => $this->isPersisting,
             'filters' => $this->serializeFilters(),
         ]);
     }
