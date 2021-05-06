@@ -275,7 +275,8 @@ export default {
     },
 
     initialiseIsPersisting() {
-      if (!this.persistedResources || !this.persistedResources[this.resourceName]) return (this.isPersisting = this.card.persistFiltersDefault);
+      if (!this.persistedResources || !this.persistedResources[this.resourceName])
+        return (this.isPersisting = this.card.persistFiltersDefault);
       this.isPersisting = this.persistedResources[this.resourceName];
     },
 
