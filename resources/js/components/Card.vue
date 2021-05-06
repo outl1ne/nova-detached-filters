@@ -108,7 +108,7 @@ export default {
     persistedResources: JSON.parse(localStorage.getItem('PERSIST_DETACHED_FILTERS')),
     collapsedResources: JSON.parse(localStorage.getItem('COLLAPSED_DETACHED_FILTERS')),
 
-    isPersisting: this.card.persistFiltersDefault,
+    isPersisting: false,
     isCollapsed: false,
   }),
 
