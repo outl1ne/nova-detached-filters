@@ -108,7 +108,7 @@ export default {
     persistedResources: JSON.parse(localStorage.getItem('PERSIST_DETACHED_FILTERS')),
     collapsedResources: JSON.parse(localStorage.getItem('COLLAPSED_DETACHED_FILTERS')),
 
-    isPersisting: false,
+    isPersisting: this.card.persistFiltersDefault,
     isCollapsed: false,
   }),
 
@@ -275,7 +275,7 @@ export default {
     },
 
     initialiseIsPersisting() {
-      if (!this.persistedResources || !this.persistedResources[this.resourceName]) return (this.isPersisting = false);
+      if (!this.persistedResources || !this.persistedResources[this.resourceName]) return (this.isPersisting = this.card.persistFiltersDefault);
       this.isPersisting = this.persistedResources[this.resourceName];
     },
 
