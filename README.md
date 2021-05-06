@@ -19,7 +19,6 @@ This [Laravel Nova](https://nova.laravel.com/) package allows you to place filte
 
 ![Small Cards](docs/Small.png)
 
-
 ## Installation
 
 Install the package in a Laravel Nova project via Composer:
@@ -59,6 +58,7 @@ protected function myFilters()
 ```
 
 ## HasDetachedFilters
+
 If you only wish to show some filters on `DetachedFilters` card, you must use `HasDetachedFilters` trait.
 
 ```php
@@ -92,6 +92,7 @@ class ExampleResource extends Resource
 ## Customization
 
 ### Widths
+
 You can define the width of the filter using `withMeta()`.
 To see available width options, check out [Tailwind width classes](https://tailwindcss.com/docs/width#app)
 
@@ -127,6 +128,7 @@ public function cards(Request $request)
 ```
 
 ### Resetting filter values
+
 If you have bigger filters that take longer to clear manually, you can define `withReset` in filters metadata, that will render a button to easily clear the filters value without affecting other filters.
 
 ```php
@@ -141,6 +143,7 @@ public function cards(Request $request)
 ```
 
 If you want to clear all filters, you can call `withReset()` on `NovaDetachedFilters` class. This will render a button on the top-left corner that will clear all filter values.
+
 ```php
 public function cards(Request $request)
 {
@@ -153,9 +156,15 @@ public function cards(Request $request)
 ```
 
 ### Storing filter state
+
 When you are working with multiple resources and large group of filters, assigning them every time you navigate is a hassle.
 You can call `persistFilters()` function on `NovaDetachedFilters` that will render a lock button top-right corner of the card.
 Upon clicking the button, the lock will turn green stating that current filters are saved to `localStorage`.
+
+| Argument            | Default | Description                                                      |
+| ------------------- | ------- | ---------------------------------------------------------------- |
+| persitFilters       | `true`  | Defines whether persist filters button should be shown.          |
+| isPersistingDefault | `false` | Optionally define whether filters should be persisted by default |
 
 ```php
 public function cards(Request $request)
@@ -169,6 +178,7 @@ public function cards(Request $request)
 ```
 
 ### Collapsing card
+
 If you want to allow collapsing filter card you can call `withToggle()` on`NovaDetachedFilters`.
 By default, this is `false`.
 
@@ -184,6 +194,7 @@ public function cards(Request $request)
 ```
 
 ### Per page options - NOVA <= 3.15.0
+
 Shows the `per-page` dropdown on `DetachedFilter` card. You need to pass in the `perPageOptions` defined in your resource.
 **NB: Only works with version 3.15.0 or higher of laravel/nova**
 
@@ -201,6 +212,7 @@ public function cards(Request $request)
 ```
 
 ### Columns
+
 When working with large boolean filters or pill filters that are the height of multiple regular filters, you can wrap filters inside `DetachedFiltersColumn` to easily wrap them in columns.
 
 `DetachedFilterColumn` class takes two arguments `$filters` and `$width`.
