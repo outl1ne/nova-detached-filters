@@ -20,22 +20,23 @@ class NovaDetachedFilters extends Card
         $this->filters = $filters;
     }
 
-    public function component()
+    public function component(): string
     {
-        return 'nova-detached-filters';
+        return 'nova-detached-filters-card';
     }
 
-    public function width($width)
+    public function width($width): self
     {
         if (empty($width)) {
             return $this;
         }
+
         $this->width = $width;
 
         return $this;
     }
 
-    public function withReset(bool $value = true)
+    public function withReset(bool $value = true): self
     {
         $this->withReset = $value;
 
@@ -91,7 +92,12 @@ class NovaDetachedFilters extends Card
         return is_callable($this->filters) ? $this->filters() : $this->filters;
     }
 
-    public function jsonSerialize()
+    /**
+     * Prepare the element for JSON serialization.
+     *
+     * @return array<string, mixed
+     */
+    public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [
             'withReset' => $this->withReset,

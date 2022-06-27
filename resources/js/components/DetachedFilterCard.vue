@@ -75,6 +75,7 @@
           />
         </svg>
       </div>
+
       <div class="detached-filters-button" v-if="card.withToggle">
         <svg
           dusk="collapse-detached-filters"
@@ -97,11 +98,12 @@
 </template>
 
 <script>
-import { Filterable, InteractsWithQueryString, PerPageable } from 'laravel-nova';
+import { Filterable, RouteParameters, PerPageable, InteractsWithQueryString } from '../mixins';
 
 export default {
-  mixins: [Filterable, InteractsWithQueryString, PerPageable],
+  mixins: [Filterable, InteractsWithQueryString, PerPageable, RouteParameters],
   props: ['card', 'resourceName', 'viaResource', 'viaRelationship'],
+
   data: () => ({
     perPageStyle: null,
     persistedFilters: JSON.parse(localStorage.getItem('PERSISTED_DETACHED_FILTERS')),
@@ -228,26 +230,6 @@ export default {
     },
 
     /**
-     * Handle a filter state change.
-     */
-    filterChanged() {
-      const encodedFilters = this.$store.getters[`${this.resourceName}/currentEncodedFilters`];
-
-      if (this.$route.query[this.pageParameter] !== '1' || this.$route.query[this.filterParameter] !== encodedFilters)
-        this.updateQueryString({
-          [this.pageParameter]: 1,
-          [this.filterParameter]: encodedFilters,
-        });
-    },
-
-    /**
-     * Update the desired amount of resources per page.
-     */
-    perPageChanged(event) {
-      Nova.$emit('change-per-page', event.target.value);
-    },
-
-    /**
      * Load persisted filters from existing filters
      */
     loadPersistedFromFilters() {
@@ -283,40 +265,6 @@ export default {
     initialiseIsCollapsed() {
       if (!this.collapsedResources || !this.collapsedResources[this.resourceName]) return (this.isCollapsed = false);
       this.isCollapsed = this.collapsedResources[this.resourceName];
-    },
-  },
-
-  computed: {
-    pageParameter() {
-      return this.viaRelationship ? this.viaRelationship + '_page' : this.resourceName + '_page';
-    },
-
-    /**
-     * Resource card has per-page options
-     */
-    hasPerPageOptions() {
-      return Array.isArray(this.perPageOptions);
-    },
-
-    /**
-     * The per-page options configured for this resource.
-     */
-    perPageOptions() {
-      return this.card.perPageOptions;
-    },
-
-    /**
-     * Get the current per page value from the query string.
-     */
-    currentPerPage() {
-      return this.$route.query[this.perPageParameter] || this.perPageOptions[0];
-    },
-
-    /**
-     * Get the name of the per page query string variable.
-     */
-    perPageParameter() {
-      return this.viaRelationship ? this.viaRelationship + '_per_page' : this.resourceName + '_per_page';
     },
   },
 };

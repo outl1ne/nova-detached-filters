@@ -2,7 +2,6 @@
 
 namespace OptimistDigital\NovaDetachedFilters;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -16,7 +15,9 @@ trait HasDetachedFilters
      */
     public function availableFilters(NovaRequest $request)
     {
-        return $this->resolveFilters($request)->filter->authorizedToSee($request)->values();
+        return $this->resolveFilters($request)
+            ->concat($this->resolveFiltersFromFields($request))
+            ->filter->authorizedToSee($request)->values();
     }
 
     /**
@@ -28,7 +29,7 @@ trait HasDetachedFilters
     public function resolveFilters(NovaRequest $request)
     {
         $menuFilters = self::modifyFilters(parent::resolveFilters($request), true);
-        $detachedFilters = self::modifyFilters(self::resolveDetachedFilters($request), false);
+        $detachedFilters = self::modifyFilters($this->resolveDetachedFilters($request), false);
 
         return $menuFilters->merge($detachedFilters)->unique('class');
     }
@@ -36,10 +37,10 @@ trait HasDetachedFilters
     /**
      * Get the filters available on the entity.
      *
-     * @param Request $request
+     * @param NovaRequest $request
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(NovaRequest $request)
     {
         return [];
     }
@@ -65,7 +66,7 @@ trait HasDetachedFilters
     public static function modifyFilters(Collection $filters, bool $showInMenu)
     {
         $filters->map(function ($filter) use ($showInMenu) {
-            $filter->withMeta(['showInMenu' => $showInMenu]);
+            if (!$showInMenu) $filter->withMeta(['component' => 'nova-attached-hidden-filter']);
             $filter->class = $filter->key();
 
             return $filter;
