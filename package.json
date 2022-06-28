@@ -9,7 +9,6 @@
     "lint": "eslint resources/js --fix --ext js,vue"
   },
   "devDependencies": {
-    "@inertiajs/inertia": "^0.11.0",
     "@vue/babel-plugin-jsx": "^1.1.1",
     "eslint": "^8.18.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -21,10 +20,12 @@
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.53.0",
     "sass-loader": "^13.0.1",
-    "vue-loader": "^16.8.3"
+    "vue-loader": "^16.8.3",
+    "postcss": "^8.4.14",
+    "postcss-import": "^14.1.0"
   },
   "dependencies": {
-    "@inertiajs/inertia-vue3": "^0.6.0",
+    "tailwindcss": "^3.0.24",
     "laravel-nova": "^1.12.3",
     "vue": "^3.2.36"
   }

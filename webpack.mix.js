@@ -1,18 +1,12 @@
 let mix = require('laravel-mix');
-let path = require('path');
+let tailwindcss = require('tailwindcss');
+let postcssImport = require('postcss-import');
+
+require('./nova.mix.js');
 
 mix
   .setPublicPath('dist')
   .js('resources/js/entry.js', 'js')
   .vue({ version: 3 })
-  .webpackConfig({
-    externals: {
-      vue: 'Vue',
-    },
-    output: {
-      uniqueName: 'outl1ne/nova-detached-filters',
-    },
-  })
-  .alias({
-    'laravel-nova': path.join(__dirname, 'vendor/laravel/nova/resources/js/mixins/packages.js'),
-  });
+  .postCss('resources/css/field.css', 'dist/css/', [postcssImport(), tailwindcss('tailwind.config.js')])
+  .nova('outl1ne/nova-detached-filters');
