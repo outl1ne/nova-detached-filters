@@ -17,6 +17,7 @@ class CardServiceProvider extends ServiceProvider
     {
         Nova::serving(function (ServingNova $event) {
             Nova::script('nova-detached-filters', __DIR__ . '/../dist/js/entry.js');
+            Nova::style('nova-detached-filters-css', __DIR__ . '/../dist/css/entry.css');
         });
     }
 }

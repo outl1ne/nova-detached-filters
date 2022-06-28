@@ -8,5 +8,5 @@ mix
   .setPublicPath('dist')
   .js('resources/js/entry.js', 'js')
   .vue({ version: 3 })
-  .postCss('resources/css/field.css', 'dist/css/', [postcssImport(), tailwindcss('tailwind.config.js')])
+  .postCss('resources/css/entry.css', 'dist/css/', [postcssImport(), tailwindcss('tailwind.config.js')])
   .nova('outl1ne/nova-detached-filters');
