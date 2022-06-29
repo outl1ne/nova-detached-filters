@@ -2,9 +2,9 @@
 
 namespace OptimistDigital\NovaDetachedFilters;
 
-use Illuminate\Support\ServiceProvider;
-use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
+use Laravel\Nova\Events\ServingNova;
+use Illuminate\Support\ServiceProvider;
 
 class CardServiceProvider extends ServiceProvider
 {
@@ -16,7 +16,8 @@ class CardServiceProvider extends ServiceProvider
     public function boot()
     {
         Nova::serving(function (ServingNova $event) {
-            Nova::script('nova-detached-filters', __DIR__ . '/../dist/js/card.js');
+            Nova::script('nova-detached-filters', __DIR__ . '/../dist/js/entry.js');
+            Nova::style('nova-detached-filters-css', __DIR__ . '/../dist/css/entry.css');
         });
     }
 }
