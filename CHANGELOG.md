@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 22-06-29
+
+### Added
+
+- Support for Laravel Nova 4
+- Upgrade components to vue 3
+- Added tailwind with `o1-` prefix.
+
+### Changed
+
+- Requirements
+  - php: `>= 8.0`
+  - laravel/framework: `^8.0`
+  - laravel/nova: `^4.0`
+
+### Removed
+
+- Resources per page selector: `withPerPage`.
+  - There might be a way to re-integrate this feature, but as of now, I've hidden this feature.
+
 ## [1.1.0] - 2021-05-06
 
 ### Changed
