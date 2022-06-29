@@ -1,6 +1,7 @@
 <template>
   <card class="flex flex-col h-auto relative o1-min-h-0">
     <div
+      v-if="hasAnyActions"
       class="o1-flex o1-justify-end overflow-hidden"
       :class="{
         'rounded-lg': isCollapsed,
@@ -221,6 +222,12 @@ export default {
     initialiseIsCollapsed() {
       if (!this.collapsedResources || !this.collapsedResources[this.resourceName]) return (this.isCollapsed = false);
       this.isCollapsed = this.collapsedResources[this.resourceName];
+    },
+  },
+
+  computed: {
+    hasAnyActions() {
+      return this.card.withReset || this.card.withToggle || this.card.persistFilters;
     },
   },
 };
