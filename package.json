@@ -6,6 +6,7 @@
     "hot": "mix watch --hot",
     "prod": "mix --production",
     "format": "prettier --write 'resources/**/*.{css,js,vue}'",
+    "format:php": "./vendor/bin/pint",
     "lint": "eslint resources/js --fix --ext js,vue"
   },
   "devDependencies": {
