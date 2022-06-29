@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- When using `hasDetachedFilters`, filters are now grouped by `->key()` [#13](https://github.com/optimistdigital/nova-detached-filters/issues/13)
+- When using `hasDetachedFilters`, filters are now grouped by `->key()` [#13](https://github.com/outl1ne/nova-detached-filters/issues/13)
 
 ## [1.0.9] - 2020-10-30
 
@@ -48,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Fixed support with `optimistdigital/nova-multiselect-filter`
+- Fixed support with `outl1ne/nova-multiselect-filter`
 
 ## [1.0.7] - 2020-10-30
 

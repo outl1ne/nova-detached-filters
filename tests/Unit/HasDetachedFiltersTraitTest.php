@@ -1,12 +1,12 @@
 <?php
 
-namespace OptimistDigital\NovaDetachedFilters\Tests\Unit;
+namespace Outl1ne\NovaDetachedFilters\Tests\Unit;
 
 use Laravel\Nova\Http\Requests\NovaRequest;
-use OptimistDigital\NovaDetachedFilters\Tests\Fixtures\User;
-use OptimistDigital\NovaDetachedFilters\Tests\Fixtures\UserResource;
-use OptimistDigital\NovaDetachedFilters\Tests\Fixtures\UserWithDetachedColumn;
-use OptimistDigital\NovaDetachedFilters\Tests\TestCase;
+use Outl1ne\NovaDetachedFilters\Tests\Fixtures\User;
+use Outl1ne\NovaDetachedFilters\Tests\Fixtures\UserResource;
+use Outl1ne\NovaDetachedFilters\Tests\Fixtures\UserWithDetachedColumn;
+use Outl1ne\NovaDetachedFilters\Tests\TestCase;
 
 class HasDetachedFiltersTraitTest extends TestCase
 {

@@ -1,7 +1,7 @@
 # Nova Detached Filters
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/optimistdigital/nova-detached-filters.svg?style=flat-square)](https://packagist.org/packages/optimistdigital/nova-detached-filters)
-[![Total Downloads](https://img.shields.io/packagist/dt/optimistdigital/nova-detached-filters.svg?style=flat-square)](https://packagist.org/packages/optimistdigital/nova-detached-filters)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/outl1ne/nova-detached-filters.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-detached-filters)
+[![Total Downloads](https://img.shields.io/packagist/dt/outl1ne/nova-detached-filters.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-detached-filters)
 
 This [Laravel Nova](https://nova.laravel.com/) package allows you to place filters in Nova cards detached from the filter dropdown.
 
@@ -24,7 +24,7 @@ This [Laravel Nova](https://nova.laravel.com/) package allows you to place filte
 Install the package in a Laravel Nova project via Composer:
 
 ```bash
-composer require optimistdigital/nova-detached-filters
+composer require outl1ne/nova-detached-filters
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ composer require optimistdigital/nova-detached-filters
 Pass the filters you wish to detach from the filter menu and show on a card to `NovaDetachedFilters` class.
 
 ```php
-use OptimistDigital\NovaDetachedFilters\NovaDetachedFilters;
+use Outl1ne\NovaDetachedFilters\NovaDetachedFilters;
 
 public function filters()
 {
@@ -62,8 +62,8 @@ protected function myFilters()
 If you only wish to show some filters on `DetachedFilters` card, you must use `HasDetachedFilters` trait.
 
 ```php
-use OptimistDigital\NovaDetachedFilters\NovaDetachedFilters;
-use \OptimistDigital\NovaDetachedFilters\HasDetachedFilters;
+use Outl1ne\NovaDetachedFilters\NovaDetachedFilters;
+use \Outl1ne\NovaDetachedFilters\HasDetachedFilters;
 
 class ExampleResource extends Resource
 {

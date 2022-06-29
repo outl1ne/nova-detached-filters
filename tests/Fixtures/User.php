@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\NovaDetachedFilters\Tests\Fixtures;
+namespace Outl1ne\NovaDetachedFilters\Tests\Fixtures;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;

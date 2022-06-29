@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\NovaDetachedFilters;
+namespace Outl1ne\NovaDetachedFilters;
 
 use Illuminate\Support\Collection;
 use Laravel\Nova\Http\Requests\NovaRequest;
