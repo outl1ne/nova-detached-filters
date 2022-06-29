@@ -9,14 +9,14 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.0]
+        php: [8.1, 8.0]
         laravel: [8.*, 9.*]
         dependency-version: [prefer-stable]
         include:
           - laravel: 8.*
             testbench: 6.*
           - laravel: 9.*
-            testbench: 7.*
+            testbench: ^7.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
@@ -40,10 +40,10 @@ jobs:
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer config http-basic.nova.laravel.com ${NOVA_USERNAME} ${NOVA_PASSWORD}
+          composer config http-basic.nova.laravel.com ${NOVA_USERNAME} ${NOVA_4_PASSWORD}
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
         env:
-          NOVA_PASSWORD: ${{ secrets.NOVA_PASSWORD }}
+          NOVA_PASSWORD: ${{ secrets.NOVA_4_PASSWORD }}
           NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
 
       - name: Execute tests
