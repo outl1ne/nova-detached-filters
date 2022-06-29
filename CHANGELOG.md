@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Requirements
   - php: `>= 8.0`
-  - laravel/framework: `^8.0`
+  - laravel/framework: `>= 9.0`
   - laravel/nova: `^4.0`
 
 ### Removed
