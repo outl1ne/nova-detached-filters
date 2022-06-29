@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\NovaDetachedFilters;
+namespace Outl1ne\NovaDetachedFilters;
 
 use JsonSerializable;
 use Laravel\Nova\Makeable;

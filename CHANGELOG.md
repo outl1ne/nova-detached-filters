@@ -16,14 +16,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Requirements
+
   - php: `>= 8.0`
   - laravel/framework: `>= 9.0`
   - laravel/nova: `^4.0`
 
-### Removed
+  ### Removed
 
 - Resources per page selector: `withPerPage`.
   - There might be a way to re-integrate this feature, but as of now, I've hidden this feature.
+
+**Due to our organization changing it's name, we are changing the namespace starting this release.**
+
+- composer.json:
+  - `"optimist-digital/nova-detached-filters"` =>`"outl1ne/nova-detached-filters"`
+- imports:
+  - `OptimistDigital\NovaDetachedFilters` => `Outl1ne\NovaDetachedFilters`
 
 ## [1.1.0] - 2021-05-06
 
@@ -55,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- When using `hasDetachedFilters`, filters are now grouped by `->key()` [#13](https://github.com/optimistdigital/nova-detached-filters/issues/13)
+- When using `hasDetachedFilters`, filters are now grouped by `->key()` [#13](https://github.com/outl1ne/nova-detached-filters/issues/13)
 
 ## [1.0.9] - 2020-10-30
 
@@ -68,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Fixed support with `optimistdigital/nova-multiselect-filter`
+- Fixed support with `outl1ne/nova-multiselect-filter`
 
 ## [1.0.7] - 2020-10-30
 
