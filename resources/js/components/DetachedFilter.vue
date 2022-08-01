@@ -3,7 +3,6 @@
     <component
       :resource-name="resourceName"
       :key="filter.name"
-      :filter="filter"
       :filter-key="filter.class"
       :is="filter.component"
       :lens="''"
