@@ -6,6 +6,7 @@
       :filter-key="filter.class"
       :is="filter.component"
       :lens="''"
+      class="py-2"
       @input="$emit('handle-filter-changed', filter)"
       @change="$emit('handle-filter-changed', filter)"
     />
@@ -31,14 +32,16 @@ export default {
 <style lang="scss">
 .nova-detached-filter {
   h3 {
-    background-color: transparent;
-    text-transform: capitalize;
-    padding: 0.25rem 4rem 0 0.5rem;
-    font-size: 16px;
-    font-weight: 300;
-    font-family: Nunito, system-ui, BlinkMacSystemFont, -apple-system, sans-serif;
+    margin-bottom: 2px;
+
     white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  h3 + div {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
   }
 
   > div:first-of-type {

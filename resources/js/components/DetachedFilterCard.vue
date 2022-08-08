@@ -11,6 +11,7 @@
       <ActionButton v-if="card.withReset" @click="clearAllFilters()">
         <ResetIcon />
       </ActionButton>
+
       <ActionButton @click="toggleIsPersisting" v-if="card.persistFilters">
         <LockIcon
           :class="{
@@ -19,6 +20,7 @@
           }"
         />
       </ActionButton>
+
       <ActionButton v-if="card.withToggle" @click="toggleIsCollapsed">
         <CollapseIcon :class="{ 'o1-rotate-90': isCollapsed, 'o1-rotate-[270deg]': !isCollapsed }" />
       </ActionButton>
