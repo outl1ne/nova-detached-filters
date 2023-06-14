@@ -25,7 +25,7 @@
         <CollapseIcon :class="{ 'o1-rotate-90': isCollapsed, 'o1-rotate-[270deg]': !isCollapsed }" />
       </ActionButton>
     </div>
-    <div class="px-3 py-4 flex flex-wrap max-h-screen opacity-100 z-10" :class="{ hidden: isCollapsed }">
+    <div class="px-3 py-4 flex flex-wrap max-h-screen opacity-100" :class="{ hidden: isCollapsed }">
       <div class="flex flex-wrap" :class="getWidth(item)" v-for="item in card.filters" :key="item.key">
         <!-- Single Filter -->
         <nova-detached-filter
