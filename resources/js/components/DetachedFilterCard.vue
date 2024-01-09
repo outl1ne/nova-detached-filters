@@ -1,5 +1,5 @@
 <template>
-  <card class="flex flex-col h-auto relative o1-min-h-0">
+  <card class="flex flex-col h-auto relative o1-min-h-0 o1-overflow-visible">
     <div
       v-if="hasAnyActions"
       class="o1-flex o1-justify-end overflow-hidden"
