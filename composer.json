@@ -1,71 +1,91 @@
 {
-  "name": "outl1ne/nova-detached-filters",
-  "description": "This Laravel Nova package allows you to detach filters from the filter dropdown",
-  "keywords": [
-    "laravel",
-    "nova",
-    "card",
-    "filter",
-    "persist"
-  ],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Kaspar Rosin",
-      "email": "kaspar.rosin@gmail.com",
-      "role": "Developer"
+    "name": "outl1ne/nova-detached-filters",
+    "description": "This Laravel Nova package allows you to detach filters from the filter dropdown",
+    "keywords": [
+        "laravel",
+        "nova",
+        "card",
+        "filter",
+        "persist"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kaspar Rosin",
+            "email": "kaspar.rosin@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Tarvo Reinpalu",
+            "email": "tarvoreinpalu@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Outl1ne",
+            "email": "info@outl1ne.com",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "laravel/nova": "~4.0",
+        "nova-kit/nova-packages-tool": "^1.14"
     },
-    {
-      "name": "Tarvo Reinpalu",
-      "email": "tarvoreinpalu@gmail.com",
-      "role": "Developer"
+    "require-dev": {
+        "laravel/pint": "^0.2.1",
+        "nova-kit/nova-devtool": "^1.5",
+        "orchestra/testbench": "^7.0.0",
+        "phpunit/phpunit": "^9.5"
     },
-    {
-      "name": "Outl1ne",
-      "email": "info@outl1ne.com",
-      "role": "Maintainer"
+    "autoload": {
+        "psr-4": {
+            "Outl1ne\\NovaDetachedFilters\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Outl1ne\\NovaDetachedFilters\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Outl1ne\\NovaDetachedFilters\\CardServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": [
+            "phpunit tests"
+        ],
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "lint": [
+            "@php vendor/bin/pint"
+        ]
     }
-  ],
-  "require": {
-    "php": ">=8.0.0",
-    "laravel/nova": "~4.0"
-  },
-  "require-dev": {
-    "laravel/pint": "^0.2.1",
-    "orchestra/testbench": "^7.0.0",
-    "phpunit/phpunit": "^9.5"
-  },
-  "autoload": {
-    "psr-4": {
-      "Outl1ne\\NovaDetachedFilters\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Outl1ne\\NovaDetachedFilters\\Tests\\": "tests/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Outl1ne\\NovaDetachedFilters\\CardServiceProvider"
-      ]
-    }
-  },
-  "config": {
-    "sort-packages": true
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://nova.laravel.com"
-    }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "test": [
-      "phpunit tests"
-    ]
-  }
 }
