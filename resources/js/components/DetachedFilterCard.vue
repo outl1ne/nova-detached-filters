@@ -1,5 +1,5 @@
 <template>
-  <card class="flex flex-col h-auto relative o1-min-h-0 o1-overflow-visible">
+  <card id="o1-detached-card" class="flex flex-col h-auto relative o1-min-h-0 o1-overflow-visible">
     <div
       v-if="hasAnyActions"
       class="o1-flex o1-justify-end overflow-hidden"
@@ -141,10 +141,12 @@ export default {
         });
       });
 
-      this.filterChanged();
+      this.syncFilters();
     },
 
     handleFilterChanged(filter) {
+      this.filterChanged();
+
       if (this.isPersisting) {
         // Get updated filter from $store;
         const updatedFilter = this.getFilter(filter.class);
@@ -164,8 +166,6 @@ export default {
 
         localStorage.setItem('PERSISTED_DETACHED_FILTERS', JSON.stringify(this.persistedFilters));
       }
-
-      this.filterChanged();
     },
 
     getFilter(filterKey) {

@@ -28,6 +28,11 @@ export default {
       Nova.$emit('filter-changed', ['']);
     },
 
+    syncFilters() {
+      const encodedFilters = this.$store.getters[`${this.resourceName}/currentEncodedFilters`];
+      this.updateQueryString({ [this.filterParameter]: encodedFilters });
+      Nova.$emit('filter-changed');
+    },
     /**
      * Handle a filter state change.
      */
@@ -41,7 +46,7 @@ export default {
         });
       }
 
-      Nova.$emit('filter-changed', [encodedFilters]);
+      Nova.$emit('filter-changed');
     },
   },
 
