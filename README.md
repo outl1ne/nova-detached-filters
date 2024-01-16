@@ -219,6 +219,16 @@ public function cards(Request $request)
 }
 ```
 
+### Demo
+
+You can preview the application via workbench by running the following commands on your local machine.
+This will assume you have installed the required software on your pc.
+
+```
+composer install
+composer serve
+```
+
 ## Credits
 
 - [Kaspar Rosin](https://github.com/kasparrosin)

@@ -7,6 +7,8 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Outl1ne\NovaDetachedFilters\NovaDetachedFilters;
+use Workbench\App\Nova\Filters\UserEmailFilter;
 
 class User extends Resource
 {
@@ -67,7 +69,11 @@ class User extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [];
+        return [
+            NovaDetachedFilters::make([
+                UserEmailFilter::make()->withMeta(['withReset' => true]),
+            ])->withReset()->persistFilters(),
+        ];
     }
 
     /**
@@ -77,7 +83,9 @@ class User extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            UserEmailFilter::make(),
+        ];
     }
 
     /**

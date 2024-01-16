@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'password' => $password,
         ]);
 
-        UserFactory::new()->times(9)->create([
+        UserFactory::new()->times(100)->create([
             'password' => $password,
         ]);
     }
