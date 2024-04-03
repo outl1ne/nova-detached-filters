@@ -1,5 +1,4 @@
 import forEach from 'lodash/forEach';
-import clone from 'lodash/cloneDeep';
 
 let compiledSearchParams = null;
 
@@ -10,7 +9,7 @@ export default {
      */
     updateQueryString(value) {
       let searchParams = new URLSearchParams(window.location.search);
-      let page = clone(this.$page);
+      let page = this.$inertia.page;
 
       forEach(value, (v, i) => {
         searchParams.set(i, v || '');
