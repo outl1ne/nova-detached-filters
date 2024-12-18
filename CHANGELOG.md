@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Workbench usable by `composer run serve` command.
+- Nova 5 support
 
 ### Changed
 
-- Updated mixins and resources to latest nova release (4.32.11)
+- Refactored how mixins are imported
 
 ## [2.1.0] - 16-01-24
 
