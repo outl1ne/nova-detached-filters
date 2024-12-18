@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.0] - 24-01-16
+## [3.0.0] - 18-12-24
 
 ### Added
 
@@ -15,7 +15,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated mixins and resources to latest nova release (4.32.11)
 
-## [2.0.4] - 24-01-09
+## [2.1.0] - 16-01-24
+
+### Added
+
+- Workbench usable by `composer run serve` command.
+
+### Changed
+
+- Updated mixins and resources to latest nova release (4.32.11)
+
+## [2.0.4] - 09-01-24
 
 ### Changed
 

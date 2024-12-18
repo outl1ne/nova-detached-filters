@@ -54,7 +54,10 @@
 </template>
 
 <script>
-import { Filterable, RouteParameters, PerPageable, InteractsWithQueryString } from '../mixins';
+import { RouteParameters } from '../mixins';
+import InteractsWithQueryString from 'laravel-nova-mixins/InteractsWithQueryString';
+import PerPageable from 'laravel-nova-mixins/PerPageable';
+import Filterable from 'laravel-nova-mixins/Filterable';
 import ActionButton from './ActionButton';
 import { LockIcon, ResetIcon, CollapseIcon } from './icons';
 
