@@ -12,7 +12,6 @@ jobs:
         dependency-version: [prefer-stable]
         include:
           - laravel: 11.*
-          - testbench: ^7.0
 
     steps:
       - name: Checkout code
