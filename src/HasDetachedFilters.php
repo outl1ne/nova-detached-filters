@@ -13,7 +13,7 @@ trait HasDetachedFilters
      * @param NovaRequest $request
      * @return Collection
      */
-    public function availableFilters(NovaRequest $request)
+    public function availableFilters(NovaRequest $request): Collection
     {
         return $this->resolveFilters($request)
             ->concat($this->resolveFiltersFromFields($request))
@@ -26,7 +26,7 @@ trait HasDetachedFilters
      * @param NovaRequest $request
      * @return Collection
      */
-    public function resolveFilters(NovaRequest $request)
+    public function resolveFilters(NovaRequest $request): Collection
     {
         $menuFilters = self::modifyFilters(parent::resolveFilters($request), true);
         $detachedFilters = self::modifyFilters($this->resolveDetachedFilters($request), false);
@@ -51,7 +51,7 @@ trait HasDetachedFilters
      * @param NovaRequest $request
      * @return Collection
      */
-    private function resolveDetachedFilters(NovaRequest $request)
+    private function resolveDetachedFilters(NovaRequest $request): Collection
     {
         $detachedFilterCards = collect($this->cards($request))->whereInstanceOf(NovaDetachedFilters::class);
         $detachedFilters = [];
