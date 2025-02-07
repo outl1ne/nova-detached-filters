@@ -5,6 +5,14 @@ on: [push]
 jobs:
   run-prettier:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [8.3]
+        laravel: [11.*]
+        dependency-version: [prefer-stable]
+        include:
+          - laravel: 11.*
+          - testbench: ^7.0
 
     steps:
       - name: Checkout code
