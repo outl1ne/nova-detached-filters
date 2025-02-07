@@ -28,6 +28,7 @@
   ],
   "require": {
     "php": ">=8.0.0",
+    "laravel/framework": "11.*",
     "laravel/nova": "~5.0"
   },
   "require-dev": {
