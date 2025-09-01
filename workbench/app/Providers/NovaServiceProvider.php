@@ -3,31 +3,43 @@
 namespace Workbench\App\Providers;
 
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\DevTool\DevTool;
+use Laravel\Fortify\Features;
+use Laravel\Nova\DevTool\DevTool as Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use Orchestra\Workbench\Workbench;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
+
+        //
+    }
+
+    /**
+     * Register the configurations for Laravel Fortify.
+     */
+    protected function fortify(): void
+    {
+        Nova::fortify()
+            ->features([
+                Features::updatePasswords(),
+                // Features::emailVerification(),
+                // Features::twoFactorAuthentication(['confirm' => true, 'confirmPassword' => true]),
+            ])
+            ->register();
     }
 
     /**
      * Register the Nova routes.
-     *
-     * @return void
      */
-    protected function routes()
+    protected function routes(): void
     {
-        DevTool::routes()
-            ->withAuthenticationRoutes()
+        Nova::routes()
+            ->withAuthenticationRoutes(default: true)
             ->withPasswordResetRoutes()
             ->register();
     }
@@ -36,10 +48,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      * Register the Nova gate.
      *
      * This gate determines who can access Nova in non-local environments.
-     *
-     * @return void
      */
-    protected function gate()
+    protected function gate(): void
     {
         Gate::define('viewNova', function ($user) {
             return true;
@@ -49,42 +59,40 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the dashboards that should be listed in the Nova sidebar.
      *
-     * @return array
+     * @return array<int, \Laravel\Nova\Dashboard>
      */
-    protected function dashboards()
+    protected function dashboards(): array
     {
         return [
-            new \Laravel\Nova\Dashboards\Main(),
+            new \Laravel\Nova\Dashboards\Main,
         ];
     }
 
     /**
      * Get the tools that should be listed in the Nova sidebar.
      *
-     * @return array
+     * @return array<int, \Laravel\Nova\Tool>
      */
-    public function tools()
+    public function tools(): array
     {
         return [];
     }
 
     /**
      * Register the application's Nova resources.
-     *
-     * @return void
      */
-    protected function resources()
+    protected function resources(): void
     {
-        Nova::resourcesIn(Workbench::path('app/Nova'));
+        Nova::resourcesInWorkbench();
     }
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
+        parent::register();
+
         //
     }
 }

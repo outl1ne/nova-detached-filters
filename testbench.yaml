@@ -1,5 +1,7 @@
 providers:
+  - Laravel\Nova\NovaServiceProvider
   - Laravel\Nova\NovaCoreServiceProvider
+  - Laravel\Nova\DevTool\DevToolServiceProvider
   - Workbench\App\Providers\NovaServiceProvider
 
 migrations: true
@@ -9,7 +11,9 @@ seeders:
 
 workbench:
   start: /nova
+  user: nova@laravel.com
   build:
+    - package:discover
     - asset-publish
     - create-sqlite-db
     - db:wipe
